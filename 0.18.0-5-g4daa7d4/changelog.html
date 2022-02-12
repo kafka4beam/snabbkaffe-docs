@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.27.3">
+    <meta name="project" content="snabbkaffe v0.17.1+build.143.ref8a92a66">
+
+    <title>Changelog — snabbkaffe v0.17.1+build.143.ref8a92a66</title>
+    <link rel="stylesheet" href="dist/erlang-b5092adf780908a19f62.css" />
+
+    <script src="dist/sidebar_items-c04917d720.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-38f5da25bdde1981e2f0.js"></script>
+
+
+  </head>
+  <body data-type="extras">
+    <script>
+
+      try {
+        if (localStorage.getItem('night-mode') === 'true') {
+          document.body.classList.add('night-mode');
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="readme.html" class="sidebar-projectName" translate="no">
+snabbkaffe
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.17.1+build.143.ref8a92a66
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+    <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/CHANGELOG.md#L1" title="View Source" class="view-source" rel="help">
+      <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+      <span class="sr-only">View Source</span>
+    </a>
+
+  <span>Changelog</span>
+</h1>
+
+<h2 id="0-18-0" class="section-heading">
+  <a href="#0-18-0" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  0.18.0
+</h2>
+<h3 id="features" class="section-heading">
+  <a href="#features" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Features
+</h3>
+<ul><li>Introduce <code class="inline">snabbkaffe:increasing</code> and <code class="inline">snabbkaffe:check_conseq_relation</code> functions</li></ul><h2 id="0-17-0" class="section-heading">
+  <a href="#0-17-0" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  0.17.0
+</h2>
+<h3 id="features-1" class="section-heading">
+  <a href="#features-1" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Features
+</h3>
+<ul><li>Introduce <code class="inline">snabbkaffe:dump_trace/1</code> function that saves trace to a file</li><li>Allow to change behavior of trace points by defining <code class="inline">SNK_COLLECTOR</code> macro as <code class="inline">true</code> or <code class="inline">false</code> (the latter means log trace points instead of collecting them)</li></ul><h3 id="fixes" class="section-heading">
+  <a href="#fixes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Fixes
+</h3>
+<ul><li>Fix compilation warnings</li><li>Improve output of <code class="inline">snabbkaffe:strictly_increasing</code> function</li></ul><h3 id="non-bc-changes" class="section-heading">
+  <a href="#non-bc-changes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Non-BC changes
+</h3>
+<ul><li>API of <code class="inline">find_pairs</code> function and macro are heavily reworked: <code class="inline">Strict</code> flag has been removed and the return type has been changed.
+Now they don't crash when they find an effect without a cause, but instead add it to the list.</li></ul><h2 id="0-16-0" class="section-heading">
+  <a href="#0-16-0" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  0.16.0
+</h2>
+<h3 id="features-2" class="section-heading">
+  <a href="#features-2" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Features
+</h3>
+<ul><li>Passing return value to the check stage callback is made optional:</li></ul><pre><code class="makeup erlang" translate="no"><span class="o">?</span><span class="nf">check_trace</span><span class="p" data-group-id="9925879953-1">(</span><span class="w">
+   </span><span class="n">RunStage</span><span class="p">,</span><span class="w">
+   </span><span class="nf">fun</span><span class="p" data-group-id="9925879953-2">(</span><span class="n">Trace</span><span class="p" data-group-id="9925879953-2">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+       </span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="w">
+   </span><span class="k">end</span><span class="p" data-group-id="9925879953-1">)</span></code></pre><ul><li>Check stage supports a list of callbacks in the following form:</li></ul><pre><code class="makeup erlang" translate="no"><span class="o">?</span><span class="nf">check_trace</span><span class="p" data-group-id="6887361274-1">(</span><span class="w">
+   </span><span class="n">RunStage</span><span class="p">,</span><span class="w">
+   </span><span class="p" data-group-id="6887361274-2">[</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="ss">trace_check</span><span class="p">/</span><span class="mi">1</span><span class="w">
+   </span><span class="p">,</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="ss">another_trace_check</span><span class="p">/</span><span class="mi">2</span><span class="w">
+   </span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6887361274-3">{</span><span class="s">&quot;There are no crashes&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">fun</span><span class="p" data-group-id="6887361274-4">(</span><span class="n">Trace</span><span class="p" data-group-id="6887361274-4">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="w"> </span><span class="k">end</span><span class="p" data-group-id="6887361274-3">}</span><span class="w">
+   </span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6887361274-5">{</span><span class="s">&quot;Another important check&quot;</span><span class="p">,</span><span class="w"> </span><span class="nf">fun</span><span class="p" data-group-id="6887361274-6">(</span><span class="n">Return</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="6887361274-6">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="w"> </span><span class="k">end</span><span class="p" data-group-id="6887361274-5">}</span><span class="w">
+   </span><span class="p" data-group-id="6887361274-2">]</span><span class="p" data-group-id="6887361274-1">)</span></code></pre><h3 id="fixes-1" class="section-heading">
+  <a href="#fixes-1" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Fixes
+</h3>
+<ul><li>Fix timetrap while waiting for the silence interval</li></ul><h3 id="non-bc-changes-1" class="section-heading">
+  <a href="#non-bc-changes-1" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Non-BC changes
+</h3>
+<ul><li>The check stage now must return ok or true to indicate success</li></ul><h2 id="0-15-0" class="section-heading">
+  <a href="#0-15-0" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  0.15.0
+</h2>
+<h3 id="fixes-2" class="section-heading">
+  <a href="#fixes-2" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Fixes
+</h3>
+<ul><li>Fix race condition in the injected fault</li></ul><h3 id="features-3" class="section-heading">
+  <a href="#features-3" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Features
+</h3>
+<ul><li>Improved event subscription mechanism using new APIs: <code class="inline">snabbkaffe_collector:subcribe</code> and <code class="inline">receive_events</code>, that aim to replace the <code class="inline">?wait_async_action</code> macro:</li></ul><pre><code class="makeup erlang" translate="no"><span class="p" data-group-id="3187743933-1">{</span><span class="ss">ok</span><span class="p">,</span><span class="w"> </span><span class="n">Sub</span><span class="p" data-group-id="3187743933-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">snabbkaffe_collector</span><span class="p">:</span><span class="nf">subscribe</span><span class="p" data-group-id="3187743933-2">(</span><span class="w"> </span><span class="o">?</span><span class="nf">match_event</span><span class="p" data-group-id="3187743933-3">(</span><span class="p" data-group-id="3187743933-4">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">foo</span><span class="p" data-group-id="3187743933-4">}</span><span class="p" data-group-id="3187743933-3">)</span><span class="w">
+                                          </span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="n">Quantity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w">
+                                          </span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="n">Timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">infinity</span><span class="w">
+                                          </span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="n">BackInTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">
+                                          </span><span class="p" data-group-id="3187743933-2">)</span><span class="p">,</span><span class="w">
+</span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="w"> </span><span class="ss">trigger</span><span class="w"> </span><span class="ss">async</span><span class="w"> </span><span class="ss">action</span><span class="w"> </span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="w">
+</span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="3187743933-5">(</span><span class="w"> </span><span class="p" data-group-id="3187743933-6">{</span><span class="ss">ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3187743933-7">[</span><span class="w"> </span><span class="p" data-group-id="3187743933-8">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">foo</span><span class="p">,</span><span class="w"> </span><span class="ss">n</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="3187743933-8">}</span><span class="w">
+                   </span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="3187743933-9">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">foo</span><span class="p">,</span><span class="w"> </span><span class="ss">n</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="3187743933-9">}</span><span class="w">
+                   </span><span class="p" data-group-id="3187743933-7">]</span><span class="p" data-group-id="3187743933-6">}</span><span class="w">
+            </span><span class="p">,</span><span class="w"> </span><span class="nc">snabbkaffe_collector</span><span class="p">:</span><span class="nf">receive_events</span><span class="p" data-group-id="3187743933-10">(</span><span class="n">Sub</span><span class="p" data-group-id="3187743933-10">)</span><span class="p" data-group-id="3187743933-5">)</span><span class="p">,</span></code></pre><ul><li><p><code class="inline">?block_until</code> macro support waiting for multiple events</p></li><li><p><code class="inline">snabbkaffe:fix_ct_logging</code> function includes node name in the logs</p></li></ul><h3 id="non-bc-fixes" class="section-heading">
+  <a href="#non-bc-fixes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Non-BC fixes
+</h3>
+<ul><li>Error injection uses <code class="inline">erlang:exit</code> instead of <code class="inline">erlang:error</code>. This
+may affect a small portion of testcases that specifically expect
+certain errors</li></ul><h2 id="0-14-1" class="section-heading">
+  <a href="#0-14-1" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  0.14.1
+</h2>
+<h3 id="fixes-3" class="section-heading">
+  <a href="#fixes-3" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Fixes
+</h3>
+<ul><li>Fix <code class="inline">?of_kind</code> and <code class="inline">?of_domain</code> macros</li></ul><h2 id="0-14-0" class="section-heading">
+  <a href="#0-14-0" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  0.14.0
+</h2>
+<h3 id="features-4" class="section-heading">
+  <a href="#features-4" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Features
+</h3>
+<ul><li>Timetrap: fail a testcase and dump the trace if the run stage takes too long to complete</li></ul><h2 id="0-13-0" class="section-heading">
+  <a href="#0-13-0" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  0.13.0
+</h2>
+<h3 id="features-5" class="section-heading">
+  <a href="#features-5" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Features
+</h3>
+<ul><li>Allow user to redefine the values of <code class="inline">?snk_kind</code>, <code class="inline">?snk_span</code> and <code class="inline">?snk_meta</code> macros</li></ul><h2 id="0-12-0" class="section-heading">
+  <a href="#0-12-0" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  0.12.0
+</h2>
+<h3 id="features-6" class="section-heading">
+  <a href="#features-6" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Features
+</h3>
+<ul><li>Allow to specify severity for <code class="inline">?tp_span</code> macro</li></ul><h3 id="fixes-4" class="section-heading">
+  <a href="#fixes-4" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Fixes
+</h3>
+<ul><li>Move MFA tuple to the log metadata in the prod mode</li></ul><h2 id="0-11-0" class="section-heading">
+  <a href="#0-11-0" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  0.11.0
+</h2>
+<h3 id="non-bc-fixes-1" class="section-heading">
+  <a href="#non-bc-fixes-1" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Non-BC fixes
+</h3>
+<ul><li><code class="inline">?split_trace_at</code>, <code class="inline">?splitl_trace</code> and <code class="inline">?splitr_trace</code> macros now use inverse matching.
+It was the original intention, but the fix is non-BWC</li></ul><h2 id="0-10-1" class="section-heading">
+  <a href="#0-10-1" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  0.10.1
+</h2>
+<h3 id="features-7" class="section-heading">
+  <a href="#features-7" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Features
+</h3>
+<ul><li><code class="inline">snabbkaffe.hrl</code> has been split into parts related to tracing and
+running the tests<h2 id="0-10-0" class="section-heading">
+  <a href="#0-10-0" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  0.10.0
+</h2>
+<h3 id="breaking-changes" class="section-heading">
+  <a href="#breaking-changes" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Breaking changes
+</h3>
+</li><li><code class="inline">snabbkaffe:strictly_increasing</code> function returns false when the
+list is empty</li></ul><h3 id="features-8" class="section-heading">
+  <a href="#features-8" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Features
+</h3>
+<ul><li>Add <code class="inline">?tp_span</code> macro that wraps around a piece of code and emits
+trance events when entering and completing it</li></ul><h3 id="fixes-5" class="section-heading">
+  <a href="#fixes-5" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Fixes
+</h3>
+<ul><li>Fix type specs</li></ul><h2 id="0-9-1" class="section-heading">
+  <a href="#0-9-1" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  0.9.1
+</h2>
+<h3 id="features-9" class="section-heading">
+  <a href="#features-9" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Features
+</h3>
+<ul><li>Any term can be used as metric name</li><li>snabbkaffe:push_stat work on remote nodes</li></ul><h3 id="fixes-6" class="section-heading">
+  <a href="#fixes-6" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Fixes
+</h3>
+<ul><li>Don't filter out metrics that have less than 5 samples</li></ul><h2 id="0-9-0" class="section-heading">
+  <a href="#0-9-0" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  0.9.0
+</h2>
+<h3 id="breaking-changes-1" class="section-heading">
+  <a href="#breaking-changes-1" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Breaking changes
+</h3>
+<ul><li>Tracepoints without severity no longer appear in the release build
+as debug logs. Old behavior can be emulated by explicitly specifying
+debug severity using <code class="inline">?tp(debug, Kind, Data)</code> macro</li><li>Timestamp field (<code class="inline">tp</code>) has been moved to the metadata and renamed to
+<code class="inline">time</code>. Its resolution has been changed to microsecond.</li></ul><h3 id="features-10" class="section-heading">
+  <a href="#features-10" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Features
+</h3>
+<ul><li>Add <code class="inline">logger</code> process metadata to the trace events</li><li>Add <code class="inline">?of_domain</code> and <code class="inline">?of_node</code> macros</li><li>Severity level of tracepoints affects severity of logs in the debug mode</li></ul><h2 id="0-8-2" class="section-heading">
+  <a href="#0-8-2" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  0.8.2
+</h2>
+<h3 id="fixes-7" class="section-heading">
+  <a href="#fixes-7" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Fixes
+</h3>
+<ul><li>Fix execution of tracepoints in TEST profile while snabbkaffe collector is not running</li></ul><h2 id="0-8-1" class="section-heading">
+  <a href="#0-8-1" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  0.8.1
+</h2>
+<h3 id="breaking-changes-2" class="section-heading">
+  <a href="#breaking-changes-2" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Breaking changes
+</h3>
+<ul><li>Change return type of <code class="inline">?causality</code> and <code class="inline">?strict_causality</code> macros to boolean</li></ul><h3 id="features-11" class="section-heading">
+  <a href="#features-11" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Features
+</h3>
+<ul><li>Introduce <code class="inline">?force_ordering</code> macro</li><li>Introduce support for distributed tracing. <code class="inline">snabbkaffe:forward_trace/1</code> function.</li></ul><h3 id="fixes-8" class="section-heading">
+  <a href="#fixes-8" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Fixes
+</h3>
+<ul><li>Remove dependency on <code class="inline">bear</code></li></ul><h2 id="0-7-0" class="section-heading">
+  <a href="#0-7-0" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  0.7.0
+</h2>
+<h3 id="breaking-changes-3" class="section-heading">
+  <a href="#breaking-changes-3" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Breaking changes
+</h3>
+<ul><li>Drop support for OTP releases below 21</li><li>Drop <code class="inline">hut</code> dependency, now in the release profile snabbkaffe always uses <code class="inline">kernel</code> logger</li></ul><h3 id="features-12" class="section-heading">
+  <a href="#features-12" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Features
+</h3>
+<ul><li>Kind of the trace point now can be a string</li><li>Concuerror support</li></ul><h3 id="fixes-9" class="section-heading">
+  <a href="#fixes-9" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Fixes
+</h3>
+<ul><li><code class="inline">?projection_complete</code> and <code class="inline">?projection_is_subset</code> macros now support multiple fields</li><li>Allow usage of guards in the match patterns in all macros</li></ul>
+<div class="bottom-actions">
+  <div class="bottom-actions-item">
+
+      <a href="scheduling_injection.html" class="bottom-actions-button" rel="prev">
+        <span class="subheader">
+          ← Previous Page
+        </span>
+        <span class="title">
+Injecting schedulings into the SUT
+        </span>
+      </a>
+
+  </div>
+  <div class="bottom-actions-item">
+
+      <a href="license.html" class="bottom-actions-button" rel="next">
+        <span class="subheader">
+          Next Page →
+        </span>
+        <span class="title">
+LICENSE
+        </span>
+      </a>
+
+  </div>
+</div>
+
+      <footer class="footer">
+
+          <p>
+            On Hex.pm:
+
+            <span class="line">
+              <a href="https://hex.pm/packages/snabbkaffe/0.17.1+build.143.ref8a92a66" class="line footer-hex-package">Package</a>
+              <a href="https://preview.hex.pm/preview/snabbkaffe/0.17.1+build.143.ref8a92a66" class="line">Preview</a>
+
+                <a href="https://preview.hex.pm/preview/snabbkaffe/0.17.1+build.143.ref8a92a66/show/CHANGELOG.md">(current file)</a>
+
+            </span>
+
+            <button class="line footer-button display-quick-switch">
+              Search
+            </button>
+          </p>
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.3) for the
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>
