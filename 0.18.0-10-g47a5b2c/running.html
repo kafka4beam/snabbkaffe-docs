@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.27.3">
+    <meta name="project" content="snabbkaffe v0.17.1+build.143.ref8a92a66">
+
+    <title>Running the testcases — snabbkaffe v0.17.1+build.143.ref8a92a66</title>
+    <link rel="stylesheet" href="dist/erlang-b5092adf780908a19f62.css" />
+
+    <script src="dist/sidebar_items-066f7d3693.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-38f5da25bdde1981e2f0.js"></script>
+
+
+  </head>
+  <body data-type="extras">
+    <script>
+
+      try {
+        if (localStorage.getItem('night-mode') === 'true') {
+          document.body.classList.add('night-mode');
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="readme.html" class="sidebar-projectName" translate="no">
+snabbkaffe
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.17.1+build.143.ref8a92a66
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+    <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/doc/src/running.md#L1" title="View Source" class="view-source" rel="help">
+      <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+      <span class="sr-only">View Source</span>
+    </a>
+
+  <span>Running the testcases</span>
+</h1>
+
+<p>This chapter describes the high-level structure of the snabbkaffe testcase.
+Most of the work is done by <code class="inline">?check_trace</code> macro, which can be placed inside eunit, Common Test or proper testcase.</p><h2 id="check_trace" class="section-heading">
+  <a href="#check_trace" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  check_trace
+</h2>
+<p>In the most basic form, Snabbkaffe tests look like this:</p><pre><code class="makeup erlang" translate="no"><span class="p">-</span><span class="na">module</span><span class="p" data-group-id="1168388255-1">(</span><span class="ss">running_example</span><span class="p" data-group-id="1168388255-1">)</span><span class="p">.</span><span class="w">
+</span><span class="w">
+</span><span class="p">-</span><span class="na">compile</span><span class="p" data-group-id="1168388255-2">(</span><span class="ss">export_all</span><span class="p" data-group-id="1168388255-2">)</span><span class="p">.</span><span class="w">
+</span><span class="p">-</span><span class="na">include_lib</span><span class="p" data-group-id="1168388255-3">(</span><span class="s">&quot;proper/include/proper.hrl&quot;</span><span class="p" data-group-id="1168388255-3">)</span><span class="p">.</span><span class="w">
+</span><span class="p">-</span><span class="na">include_lib</span><span class="p" data-group-id="1168388255-4">(</span><span class="s">&quot;eunit/include/eunit.hrl&quot;</span><span class="p" data-group-id="1168388255-4">)</span><span class="p">.</span><span class="w">
+</span><span class="p">-</span><span class="na">include_lib</span><span class="p" data-group-id="1168388255-5">(</span><span class="s">&quot;snabbkaffe/include/snabbkaffe.hrl&quot;</span><span class="p" data-group-id="1168388255-5">)</span><span class="p">.</span><span class="w">
+
+</span><span class="nf">basic_test</span><span class="p" data-group-id="1168388255-6">(</span><span class="p" data-group-id="1168388255-6">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="o">?</span><span class="nf">check_trace</span><span class="p" data-group-id="1168388255-7">(</span><span class="w">
+     </span><span class="c1">%% Run stage:</span><span class="w">
+     </span><span class="k">begin</span><span class="w">
+       </span><span class="o">?</span><span class="nf">tp</span><span class="p" data-group-id="1168388255-8">(</span><span class="ss">some_event</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1168388255-9">#{</span><span class="ss">foo</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">foo</span><span class="p">,</span><span class="w"> </span><span class="ss">bar</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">bar</span><span class="p" data-group-id="1168388255-9">}</span><span class="p" data-group-id="1168388255-8">)</span><span class="w">
+     </span><span class="k">end</span><span class="p">,</span><span class="w">
+     </span><span class="c1">%% Check stage:</span><span class="w">
+     </span><span class="nf">fun</span><span class="p" data-group-id="1168388255-10">(</span><span class="n">RunStageResult</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="1168388255-10">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+         </span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="1168388255-11">(</span><span class="ss">ok</span><span class="p">,</span><span class="w"> </span><span class="n">RunStageResult</span><span class="p" data-group-id="1168388255-11">)</span><span class="p">,</span><span class="w">
+         </span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="1168388255-12">(</span><span class="p" data-group-id="1168388255-13">[</span><span class="p" data-group-id="1168388255-14">#{</span><span class="ss">foo</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="p">_</span><span class="p" data-group-id="1168388255-14">}</span><span class="p" data-group-id="1168388255-13">]</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="nf">of_kind</span><span class="p" data-group-id="1168388255-15">(</span><span class="ss">some_event</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="1168388255-15">)</span><span class="p" data-group-id="1168388255-12">)</span><span class="w">
+     </span><span class="k">end</span><span class="p" data-group-id="1168388255-7">)</span><span class="p">.</span></code></pre><p><code class="inline">?check_trace</code> macro performs the following steps:</p><ol><li>Start the snabbkaffe supervision tree</li><li>Produce <code class="inline">#{?snk_kind := '$trace_begin'}</code> event</li><li>Execute the code specified in the run stage section</li><li>Wait for the silence interval (if <code class="inline">timeout</code> option is set, see below)</li><li>Produce <code class="inline">#{?snk_kind := '$trace_end'}</code> event</li><li>Collect the trace</li><li>Execute the offline checks on the collected trace</li></ol><p>If either run stage or check stage fails, <code class="inline">?check_trace</code> dumps the collected trace to a file and throws an exception that is detected by eunit or Common Test.
+The trace dumps are placed to <code class="inline">snabbkaffe</code> sub-directory of the current working directory.</p><p>If the return value from the run stage is not needed in the check stage, it can be omitted:</p><pre><code class="makeup erlang" translate="no"><span class="nf">ignore_return_test</span><span class="p" data-group-id="9898366809-1">(</span><span class="p" data-group-id="9898366809-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="o">?</span><span class="nf">check_trace</span><span class="p" data-group-id="9898366809-2">(</span><span class="w">
+     </span><span class="c1">%% Run stage:</span><span class="w">
+     </span><span class="k">begin</span><span class="w">
+       </span><span class="ss">ok</span><span class="w">
+     </span><span class="k">end</span><span class="p">,</span><span class="w">
+     </span><span class="c1">%% Check stage:</span><span class="w">
+     </span><span class="nf">fun</span><span class="p" data-group-id="9898366809-3">(</span><span class="p">_</span><span class="n">Trace</span><span class="p" data-group-id="9898366809-3">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+       </span><span class="ss">ok</span><span class="w">
+     </span><span class="k">end</span><span class="p" data-group-id="9898366809-2">)</span><span class="p">.</span></code></pre><p>If the testcase allocates any resources that should be released after the completion of the run stage, it is recommended to use the following construct:</p><pre><code class="makeup erlang" translate="no"><span class="nf">try_after_test</span><span class="p" data-group-id="8638978376-1">(</span><span class="p" data-group-id="8638978376-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="o">?</span><span class="nf">check_trace</span><span class="p" data-group-id="8638978376-2">(</span><span class="w">
+    </span><span class="k">try</span><span class="w">
+      </span><span class="c1">%% Allocate resources...</span><span class="w">
+      </span><span class="nc">ets</span><span class="p">:</span><span class="nf">new</span><span class="p" data-group-id="8638978376-3">(</span><span class="ss">foo</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8638978376-4">[</span><span class="ss">named_table</span><span class="p" data-group-id="8638978376-4">]</span><span class="p" data-group-id="8638978376-3">)</span><span class="p">,</span><span class="w">
+      </span><span class="c1">%% Run test</span><span class="w">
+      </span><span class="ss">ok</span><span class="w">
+    </span><span class="k">after</span><span class="w">
+      </span><span class="nc">ets</span><span class="p">:</span><span class="nf">delete</span><span class="p" data-group-id="8638978376-5">(</span><span class="ss">foo</span><span class="p" data-group-id="8638978376-5">)</span><span class="w">
+    </span><span class="k">end</span><span class="p">,</span><span class="w">
+    </span><span class="c1">%% Check stage:</span><span class="w">
+    </span><span class="p" data-group-id="8638978376-6">[</span><span class="k">fun</span><span class="w"> </span><span class="o">?</span><span class="n">MODULE</span><span class="p">:</span><span class="ss">common_trace_spec</span><span class="p">/</span><span class="mi">1</span><span class="p">,</span><span class="w">
+     </span><span class="k">fun</span><span class="w"> </span><span class="o">?</span><span class="n">MODULE</span><span class="p">:</span><span class="ss">common_trace_spec</span><span class="p">/</span><span class="mi">2</span><span class="p">,</span><span class="w">
+     </span><span class="p" data-group-id="8638978376-7">{</span><span class="s">&quot;Another trace spec&quot;</span><span class="p">,</span><span class="w">
+      </span><span class="nf">fun</span><span class="p" data-group-id="8638978376-8">(</span><span class="p">_</span><span class="n">Result</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="n">Trace</span><span class="p" data-group-id="8638978376-8">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+        </span><span class="ss">true</span><span class="w">
+      </span><span class="k">end</span><span class="p" data-group-id="8638978376-7">}</span><span class="w">
+    </span><span class="p" data-group-id="8638978376-6">]</span><span class="p" data-group-id="8638978376-2">)</span><span class="p">.</span><span class="w">
+
+</span><span class="c1">%% Make sure the trace is a list:</span><span class="w">
+</span><span class="nf">common_trace_spec</span><span class="p" data-group-id="8638978376-9">(</span><span class="n">Trace</span><span class="p" data-group-id="8638978376-9">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="o">?</span><span class="nf">assert</span><span class="p" data-group-id="8638978376-10">(</span><span class="nf">is_list</span><span class="p" data-group-id="8638978376-11">(</span><span class="n">Trace</span><span class="p" data-group-id="8638978376-11">)</span><span class="p" data-group-id="8638978376-10">)</span><span class="p">.</span><span class="w">
+
+</span><span class="c1">%% Check the return value of the run stage:</span><span class="w">
+</span><span class="nf">common_trace_spec</span><span class="p" data-group-id="8638978376-12">(</span><span class="n">Result</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="8638978376-12">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="8638978376-13">(</span><span class="ss">ok</span><span class="p">,</span><span class="w"> </span><span class="n">Result</span><span class="p" data-group-id="8638978376-13">)</span><span class="p">.</span></code></pre><p>Notice another new thing in the above example: the check stage is defined as a list of callbacks.
+This form allows to reuse trace specifications in multiple tests.</p><h2 id="check_trace-options" class="section-heading">
+  <a href="#check_trace-options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  check_trace options
+</h2>
+<p><code class="inline">?check_trace</code> macro can accept some additional arguments:</p><pre><code class="makeup erlang" translate="no"><span class="nf">options_test_</span><span class="p" data-group-id="2265716736-1">(</span><span class="p" data-group-id="2265716736-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="p" data-group-id="2265716736-2">{</span><span class="ss">timeout</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
+    </span><span class="p" data-group-id="2265716736-3">[</span><span class="nf">fun</span><span class="p" data-group-id="2265716736-4">(</span><span class="p" data-group-id="2265716736-4">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+       </span><span class="o">?</span><span class="nf">check_trace</span><span class="p" data-group-id="2265716736-5">(</span><span class="w">
+         </span><span class="p" data-group-id="2265716736-6">#{</span><span class="ss">timetrap</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span><span class="w"> </span><span class="ss">timeout</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">1000</span><span class="p" data-group-id="2265716736-6">}</span><span class="p">,</span><span class="w">
+         </span><span class="c1">%% Run stage:</span><span class="w">
+         </span><span class="ss">ok</span><span class="p">,</span><span class="w">
+         </span><span class="c1">%% Check stage:</span><span class="w">
+         </span><span class="p" data-group-id="2265716736-7">[</span><span class="p" data-group-id="2265716736-7">]</span><span class="p" data-group-id="2265716736-5">)</span><span class="w">
+     </span><span class="k">end</span><span class="p" data-group-id="2265716736-3">]</span><span class="p" data-group-id="2265716736-2">}</span><span class="p">.</span></code></pre><p><code class="inline">timetrap</code> specifies how long the run stage can execute (in milliseconds).
+If this time is exceeded, the testcase fails and the trace is dumped.
+It is recommended to handle the timeouts using <code class="inline">timetrap</code> in <code class="inline">?check_trace</code>, rather than at Common Test or eunit level, because it will produce a better error message and a trace dump.</p><p><code class="inline">timeout</code> parameter specifies &quot;silence interval&quot; for the testcase.
+If it is set to <code class="inline">T</code>, upon completion of the run stage snabbkaffe will wait for events arriving within <code class="inline">T</code> milliseconds after the last received event.</p><h2 id="integrating-with-proper" class="section-heading">
+  <a href="#integrating-with-proper" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Integrating with PropEr
+</h2>
+<p>There are two useful macros for running snabbkaffe together with <a href="https://proper-testing.github.io/">PropER</a>:</p><pre><code class="makeup erlang" translate="no"><span class="nf">proper_test</span><span class="p" data-group-id="9069431115-1">(</span><span class="p" data-group-id="9069431115-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="n">Config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="9069431115-2">#{</span><span class="ss">proper</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="9069431115-3">#{</span><span class="w"> </span><span class="ss">numtests</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">100</span><span class="w">
+                        </span><span class="p">,</span><span class="w"> </span><span class="ss">timeout</span><span class="w">  </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">5000</span><span class="w">
+                        </span><span class="p">,</span><span class="w"> </span><span class="ss">max_size</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">100</span><span class="w">
+                        </span><span class="p" data-group-id="9069431115-3">}</span><span class="p">,</span><span class="w">
+             </span><span class="ss">timetrap</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">1000</span><span class="p" data-group-id="9069431115-2">}</span><span class="p">,</span><span class="w">
+  </span><span class="o">?</span><span class="nf">run_prop</span><span class="p" data-group-id="9069431115-4">(</span><span class="n">Config</span><span class="p">,</span><span class="w"> </span><span class="nf">prop</span><span class="p" data-group-id="9069431115-5">(</span><span class="p" data-group-id="9069431115-5">)</span><span class="p" data-group-id="9069431115-4">)</span><span class="p">.</span><span class="w">
+
+</span><span class="nf">prop</span><span class="p" data-group-id="9069431115-6">(</span><span class="p" data-group-id="9069431115-6">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="o">?</span><span class="n">FORALL</span><span class="p" data-group-id="9069431115-7">(</span><span class="p" data-group-id="9069431115-8">{</span><span class="n">Ret</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="p" data-group-id="9069431115-8">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9069431115-9">{</span><span class="nf">term</span><span class="p" data-group-id="9069431115-10">(</span><span class="p" data-group-id="9069431115-10">)</span><span class="p">,</span><span class="w"> </span><span class="nf">list</span><span class="p" data-group-id="9069431115-11">(</span><span class="p" data-group-id="9069431115-11">)</span><span class="p" data-group-id="9069431115-9">}</span><span class="p">,</span><span class="w">
+         </span><span class="o">?</span><span class="nf">check_trace</span><span class="p" data-group-id="9069431115-12">(</span><span class="w">
+            </span><span class="c1">%% Run stage:</span><span class="w">
+            </span><span class="ss">ok</span><span class="p">,</span><span class="w">
+            </span><span class="c1">%% Check stage:</span><span class="w">
+            </span><span class="p" data-group-id="9069431115-13">[</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="o">?</span><span class="n">MODULE</span><span class="p">:</span><span class="ss">common_trace_spec</span><span class="p">/</span><span class="mi">1</span><span class="w">
+            </span><span class="p" data-group-id="9069431115-13">]</span><span class="p" data-group-id="9069431115-12">)</span><span class="p" data-group-id="9069431115-7">)</span><span class="p">.</span></code></pre><p><code class="inline">proper</code> key of the <a href="https://hexdocs.pm/elixir/Config.html"><code class="inline">Config</code></a> contains the parameters accepted by PropEr.
+Snabbkaffe will fall back to the default values (shown above) when parameter is absent.</p><p><code class="inline">?FORALL(Var, Generator, ?check_trace(...))</code> construct is used very often, so snabbkaffe provides a shortcut:</p><pre><code class="makeup erlang" translate="no"><span class="nf">simple_prop_test</span><span class="p" data-group-id="2985863529-1">(</span><span class="p" data-group-id="2985863529-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="o">?</span><span class="nf">run_prop</span><span class="p" data-group-id="2985863529-2">(</span><span class="p" data-group-id="2985863529-3">#{</span><span class="p" data-group-id="2985863529-3">}</span><span class="p">,</span><span class="w"> </span><span class="nf">simple_prop</span><span class="p" data-group-id="2985863529-4">(</span><span class="p" data-group-id="2985863529-4">)</span><span class="p" data-group-id="2985863529-2">)</span><span class="p">.</span><span class="w">
+
+</span><span class="nf">simple_prop</span><span class="p" data-group-id="2985863529-5">(</span><span class="p" data-group-id="2985863529-5">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="o">?</span><span class="nf">forall_trace</span><span class="p" data-group-id="2985863529-6">(</span><span class="p" data-group-id="2985863529-7">{</span><span class="n">Ret</span><span class="p">,</span><span class="w"> </span><span class="n">L</span><span class="p" data-group-id="2985863529-7">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2985863529-8">{</span><span class="nf">term</span><span class="p" data-group-id="2985863529-9">(</span><span class="p" data-group-id="2985863529-9">)</span><span class="p">,</span><span class="w"> </span><span class="nf">list</span><span class="p" data-group-id="2985863529-10">(</span><span class="p" data-group-id="2985863529-10">)</span><span class="p" data-group-id="2985863529-8">}</span><span class="p">,</span><span class="w">
+                </span><span class="c1">%% Run stage:</span><span class="w">
+                </span><span class="ss">ok</span><span class="p">,</span><span class="w">
+                </span><span class="c1">%% Check stage:</span><span class="w">
+                </span><span class="p" data-group-id="2985863529-11">[</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="o">?</span><span class="n">MODULE</span><span class="p">:</span><span class="ss">common_trace_spec</span><span class="p">/</span><span class="mi">1</span><span class="w">
+                </span><span class="p" data-group-id="2985863529-11">]</span><span class="p" data-group-id="2985863529-6">)</span><span class="p">.</span></code></pre><p>It is equivalent to the previous example.</p>
+<div class="bottom-actions">
+  <div class="bottom-actions-item">
+
+      <a href="emitting_events.html" class="bottom-actions-button" rel="prev">
+        <span class="subheader">
+          ← Previous Page
+        </span>
+        <span class="title">
+Emitting events
+        </span>
+      </a>
+
+  </div>
+  <div class="bottom-actions-item">
+
+      <a href="waiting_events.html" class="bottom-actions-button" rel="next">
+        <span class="subheader">
+          Next Page →
+        </span>
+        <span class="title">
+Waiting for events during run stage
+        </span>
+      </a>
+
+  </div>
+</div>
+
+      <footer class="footer">
+
+          <p>
+            On Hex.pm:
+
+            <span class="line">
+              <a href="https://hex.pm/packages/snabbkaffe/0.17.1+build.143.ref8a92a66" class="line footer-hex-package">Package</a>
+              <a href="https://preview.hex.pm/preview/snabbkaffe/0.17.1+build.143.ref8a92a66" class="line">Preview</a>
+
+                <a href="https://preview.hex.pm/preview/snabbkaffe/0.17.1+build.143.ref8a92a66/show/doc/src/running.md">(current file)</a>
+
+            </span>
+
+            <button class="line footer-button display-quick-switch">
+              Search
+            </button>
+          </p>
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.3) for the
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>
