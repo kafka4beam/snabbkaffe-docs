@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.27.3">
+    <meta name="project" content="snabbkaffe v0.17.1+build.143.ref8a92a66">
+
+    <title>Emitting events — snabbkaffe v0.17.1+build.143.ref8a92a66</title>
+    <link rel="stylesheet" href="dist/erlang-b5092adf780908a19f62.css" />
+
+    <script src="dist/sidebar_items-e99c8dbbd0.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-38f5da25bdde1981e2f0.js"></script>
+
+
+  </head>
+  <body data-type="extras">
+    <script>
+
+      try {
+        if (localStorage.getItem('night-mode') === 'true') {
+          document.body.classList.add('night-mode');
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="readme.html" class="sidebar-projectName" translate="no">
+snabbkaffe
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.17.1+build.143.ref8a92a66
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+    <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/doc/src/emitting_events.md#L1" title="View Source" class="view-source" rel="help">
+      <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+      <span class="sr-only">View Source</span>
+    </a>
+
+  <span>Emitting events</span>
+</h1>
+
+<p>Snabbkaffe requires to instrument the code with the trace points.
+This is a manual process.
+While it is possible to intercept regular logs, snabbkaffe doesn't do that, and introduces a separate API instead.
+This is a conscious decision:</p><ol><li>Regular logs are formatted for humans, and they may be tricky to analyze by the machine.</li><li>Usually programmers do not expect test failures from merely changing the log messages.
+Using a distinct API helps indicating that the event is used somewhere.</li><li>Debug messages introduce some overhead, even when they are disabled by the logger configuration.
+Regular snabbkaffe traces completely disappear from the release build, so they can be placed in hot loops.</li><li>Snabbkaffe collector is designed to preserve ordering of the events,
+while logger can use buffering, filters or performance optimizations that are undesirable for the tests.</li><li>Snabbkaffe trace points are more than just logs, they can be used to modify the behavior of the SUT as well</li></ol><p>The trace macros are defined in a header file that can be included like this:</p><pre><code class="makeup erlang" translate="no"><span class="p">-</span><span class="na">include_lib</span><span class="p" data-group-id="4830669951-1">(</span><span class="s">&quot;snabbkaffe/include/trace.hrl&quot;</span><span class="p" data-group-id="4830669951-1">)</span><span class="p">.</span></code></pre><h2 id="tp" class="section-heading">
+  <a href="#tp" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  ?tp
+</h2>
+<p>Snabbkaffe events are produced using <code class="inline">?tp</code> macro (tp stands for &quot;trace point&quot;).
+In its basic form it looks like this:</p><pre><code class="makeup erlang" translate="no"><span class="o">?</span><span class="nf">tp</span><span class="p" data-group-id="4116501864-1">(</span><span class="ss">my_event</span><span class="p">,</span><span class="w">
+    </span><span class="p" data-group-id="4116501864-2">#{</span><span class="w"> </span><span class="ss">parameter1</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w">
+     </span><span class="p">,</span><span class="w"> </span><span class="ss">parameter2</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">foo</span><span class="w">
+     </span><span class="p">,</span><span class="w"> </span><span class="ss">parameter3</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="4116501864-3">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="4116501864-3">}</span><span class="w">
+     </span><span class="p" data-group-id="4116501864-2">}</span><span class="p" data-group-id="4116501864-1">)</span></code></pre><p>The first argument of the macro is called &quot;kind&quot;.
+It identifies the trace event.
+Ideally, it should be unique through out the code base, since it will simplify analysis of the trace.
+Kind can be an atom or a string.</p><p>The second parameter is a map that contains any additional data for the event.
+The keys should be atoms, and the values are free-form.</p><p>The resulting event in will look like this in the trace:</p><pre><code class="makeup erlang" translate="no"><span class="p" data-group-id="6705107966-1">{</span><span class="w"> </span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">my_event</span><span class="w">
+</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="ss">snk_meta</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="6705107966-2">#{</span><span class="w"> </span><span class="nb">node</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">&#39;foo@localhost&#39;</span><span class="w">
+                </span><span class="p">,</span><span class="w"> </span><span class="ss">time</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="ss">monotonic</span><span class="w"> </span><span class="ss">time</span><span class="o">&gt;</span><span class="w">
+                </span><span class="p">,</span><span class="w"> </span><span class="ss">pid</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="mf">0.343</span><span class="p">.</span><span class="mi">0</span><span class="o">&gt;</span><span class="w">
+                </span><span class="p">,</span><span class="w"> </span><span class="nb">group_leader</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="mf">0.67</span><span class="p">.</span><span class="mi">0</span><span class="o">&gt;</span><span class="w">
+                </span><span class="p" data-group-id="6705107966-2">}</span><span class="w">
+</span><span class="p">,</span><span class="w"> </span><span class="ss">parameter1</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="p">,</span><span class="w"> </span><span class="ss">parameter2</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">foo</span><span class="w">
+</span><span class="p">,</span><span class="w"> </span><span class="ss">parameter3</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="6705107966-3">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="6705107966-3">}</span><span class="w">
+</span><span class="p" data-group-id="6705107966-1">}</span></code></pre><p>If <code class="inline">logger:update_process_metadata/1</code> is used to add metadata to the process (e.g. <code class="inline">domain</code>), it will be added to <code class="inline">?snk_meta</code> field.
+This macro disappears from the release build.</p><p>A trace point may be useful as a log message in the release build.
+In this case, a different form of <code class="inline">?tp</code> can be used:</p><pre><code class="makeup erlang" translate="no"><span class="o">?</span><span class="nf">tp</span><span class="p" data-group-id="0109898541-1">(</span><span class="ss">notice</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Remote process died&quot;</span><span class="p">,</span><span class="w">
+    </span><span class="p" data-group-id="0109898541-2">#{</span><span class="w"> </span><span class="ss">reason</span><span class="w">   </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">Reason</span><span class="w">
+     </span><span class="p">,</span><span class="w"> </span><span class="ss">my_state</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">State</span><span class="w">
+     </span><span class="p" data-group-id="0109898541-2">}</span><span class="p" data-group-id="0109898541-1">)</span></code></pre><p>The first argument of the macro is log level, as used by <a href="https://www.erlang.org/doc/man/logger.html#type-level">logger</a>.
+The others are equivalent to the previous form of the macro.</p><h2 id="tp_span" class="section-heading">
+  <a href="#tp_span" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  ?tp_span
+</h2>
+<p>Sometimes it is useful to emit two events before and after some action executes.
+<code class="inline">?tp_span</code> is a shortcut that does that:</p><pre><code class="makeup erlang" translate="no"><span class="o">?</span><span class="nf">tp_span</span><span class="p" data-group-id="8072204924-1">(</span><span class="ss">foo</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8072204924-2">#{</span><span class="ss">field1</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="ss">field2</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">foo</span><span class="p" data-group-id="8072204924-2">}</span><span class="p">,</span><span class="w">
+         </span><span class="k">begin</span><span class="w">
+           </span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="w">
+         </span><span class="k">end</span><span class="p" data-group-id="8072204924-1">)</span><span class="p">.</span></code></pre><p>It produces the following trace events:</p><pre><code class="makeup erlang" translate="no"><span class="p" data-group-id="9599202518-1">#{</span><span class="w"> </span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">foo</span><span class="w">
+ </span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="ss">snk_meta</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="9599202518-2">#{</span><span class="w"> </span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="w"> </span><span class="p" data-group-id="9599202518-2">}</span><span class="w">
+ </span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="ss">snk_span</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">start</span><span class="w">
+ </span><span class="p">,</span><span class="w"> </span><span class="ss">field1</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">42</span><span class="w">
+ </span><span class="p">,</span><span class="w"> </span><span class="ss">field2</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">foo</span><span class="w">
+ </span><span class="p" data-group-id="9599202518-1">}</span><span class="p">,</span><span class="w">
+</span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="w">
+</span><span class="p" data-group-id="9599202518-3">#{</span><span class="w"> </span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">foo</span><span class="w">
+ </span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="ss">snk_meta</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="9599202518-4">#{</span><span class="w"> </span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="w"> </span><span class="p" data-group-id="9599202518-4">}</span><span class="w">
+ </span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="ss">snk_span</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="9599202518-5">{</span><span class="ss">complete</span><span class="p">,</span><span class="w"> </span><span class="n">ReturnValue</span><span class="p" data-group-id="9599202518-5">}</span><span class="w">
+ </span><span class="p">,</span><span class="w"> </span><span class="ss">field1</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">42</span><span class="w">
+ </span><span class="p">,</span><span class="w"> </span><span class="ss">field2</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">foo</span><span class="w">
+ </span><span class="p" data-group-id="9599202518-3">}</span></code></pre><p>Log level for the span can be specified like in the previous example.</p><h2 id="distributed-tracing" class="section-heading">
+  <a href="#distributed-tracing" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  Distributed tracing
+</h2>
+<p>Snabbkaffe supports distributed tracing.
+<code class="inline">snabbkaffe:forward_trace(RemoteNode)</code> function will tell the remote node to forward traces to the local collector.</p><h2 id="snk_kind-snk_meta-and-snk_span-macros" class="section-heading">
+  <a href="#snk_kind-snk_meta-and-snk_span-macros" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  ?snk_kind, ?snk_meta and ?snk_span macros
+</h2>
+<p>By default the values of <code class="inline">?snk_kind</code>, <code class="inline">?snk_meta</code> and <code class="inline">?snk_span</code> macros are set to <code class="inline">'$kind'</code>, <code class="inline">'~meta'</code> and <code class="inline">'$span'</code> respectively.
+This is done so kind and span fields appear first in the printout, and meta field is printed last.
+It makes traces and logs more readable.
+But it is possible to redefine these macros, e.g.:</p><pre><code class="makeup erlang" translate="no"><span class="p" data-group-id="0432315756-1">{</span><span class="ss">erl_opts</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="0432315756-2">[</span><span class="p" data-group-id="0432315756-3">{</span><span class="ss">d</span><span class="p">,</span><span class="w"> </span><span class="ss">snk_kind</span><span class="p">,</span><span class="w"> </span><span class="ss">msg</span><span class="p" data-group-id="0432315756-3">}</span><span class="p" data-group-id="0432315756-2">]</span><span class="p" data-group-id="0432315756-1">}</span><span class="p">.</span></code></pre><p>Please keep in mind that it may collide with the regular fields, so it's better to avoid changing the defaults.</p><h2 id="snk_collector" class="section-heading">
+  <a href="#snk_collector" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  ?SNK_COLLECTOR
+</h2>
+<p>By default the behavior of trace points is the following: in test build they emit traces, and in release build they either disappear or become regular logs.
+In some tricky test setups it may be necessary to override the default behavior.
+This can be done be defining <code class="inline">SNK_COLLECTOR</code> macro before including <code class="inline">trace.hrl</code>:</p><pre><code class="makeup erlang" translate="no"><span class="c1">%% Force snabbkaffe collector:</span><span class="w">
+</span><span class="p">-</span><span class="na">define</span><span class="p" data-group-id="5766869073-1">(</span><span class="n">SNK_COLLECTOR</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p" data-group-id="5766869073-1">)</span><span class="p">.</span><span class="w">
+</span><span class="p">-</span><span class="na">include_lib</span><span class="p" data-group-id="5766869073-2">(</span><span class="s">&quot;snabbkaffe/include/trace.hrl&quot;</span><span class="p" data-group-id="5766869073-2">)</span><span class="p">.</span></code></pre><pre><code class="makeup erlang" translate="no"><span class="c1">%% Force regular logs:</span><span class="w">
+</span><span class="p">-</span><span class="na">define</span><span class="p" data-group-id="7185037186-1">(</span><span class="n">SNK_COLLECTOR</span><span class="p">,</span><span class="w"> </span><span class="ss">false</span><span class="p" data-group-id="7185037186-1">)</span><span class="p">.</span><span class="w">
+</span><span class="p">-</span><span class="na">include_lib</span><span class="p" data-group-id="7185037186-2">(</span><span class="s">&quot;snabbkaffe/include/trace.hrl&quot;</span><span class="p" data-group-id="7185037186-2">)</span><span class="p">.</span></code></pre>
+<div class="bottom-actions">
+  <div class="bottom-actions-item">
+
+      <a href="readme.html" class="bottom-actions-button" rel="prev">
+        <span class="subheader">
+          ← Previous Page
+        </span>
+        <span class="title">
+Snabbkaffe
+        </span>
+      </a>
+
+  </div>
+  <div class="bottom-actions-item">
+
+      <a href="running.html" class="bottom-actions-button" rel="next">
+        <span class="subheader">
+          Next Page →
+        </span>
+        <span class="title">
+Running the testcases
+        </span>
+      </a>
+
+  </div>
+</div>
+
+      <footer class="footer">
+
+          <p>
+            On Hex.pm:
+
+            <span class="line">
+              <a href="https://hex.pm/packages/snabbkaffe/0.17.1+build.143.ref8a92a66" class="line footer-hex-package">Package</a>
+              <a href="https://preview.hex.pm/preview/snabbkaffe/0.17.1+build.143.ref8a92a66" class="line">Preview</a>
+
+                <a href="https://preview.hex.pm/preview/snabbkaffe/0.17.1+build.143.ref8a92a66/show/doc/src/emitting_events.md">(current file)</a>
+
+            </span>
+
+            <button class="line footer-button display-quick-switch">
+              Search
+            </button>
+          </p>
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.3) for the
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

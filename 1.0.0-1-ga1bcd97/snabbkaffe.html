@@ -1,0 +1,2296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.27.3">
+    <meta name="project" content="snabbkaffe v0.17.1+build.143.ref8a92a66">
+
+    <title>snabbkaffe — snabbkaffe v0.17.1+build.143.ref8a92a66</title>
+    <link rel="stylesheet" href="dist/erlang-b5092adf780908a19f62.css" />
+
+    <script src="dist/sidebar_items-e99c8dbbd0.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-38f5da25bdde1981e2f0.js"></script>
+
+
+  </head>
+  <body data-type="modules">
+    <script>
+
+      try {
+        if (localStorage.getItem('night-mode') === 'true') {
+          document.body.classList.add('night-mode');
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="readme.html" class="sidebar-projectName" translate="no">
+snabbkaffe
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.17.1+build.143.ref8a92a66
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+    <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L17" title="View Source" class="view-source" rel="help">
+      <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+      <span class="sr-only">View Source</span>
+    </a>
+
+  <span translate="no">snabbkaffe</span> 
+  <small class="app-vsn" translate="no">(snabbkaffe v0.17.1+build.143.ref8a92a66)</small>
+
+</h1>
+
+
+  <section id="moduledoc">
+This is the main API module
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
+
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:event/0" translate="no">event/0</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:filter/0" translate="no">filter/0</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:kind/0" translate="no">kind/0</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:maybe/1" translate="no">maybe/1</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:maybe_pair/0" translate="no">maybe_pair/0</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:metric/0" translate="no">metric/0</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:predicate/0" translate="no">predicate/0</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:predicate2/0" translate="no">predicate2/0</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:run_config/0" translate="no">run_config/0</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:timed_event/0" translate="no">timed_event/0</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:timestamp/0" translate="no">timestamp/0</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:trace/0" translate="no">trace/0</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:trace_spec/1" translate="no">trace_spec/1</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#t:trace_specs/1" translate="no">trace_specs/1</a>
+
+        </div>
+
+      </div>
+
+  </div>
+
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#analyze_statistics/0" translate="no">analyze_statistics()</a>
+
+        </div>
+
+          <div class="summary-synopsis">Print metrics to the console</div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#block_until/2" translate="no">block_until(Filter, Timeout)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Equivalent to <a href="#block_until/3">block_until(Filter, Timeout, infinity)</a>.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#block_until/3" translate="no">block_until(Filter, Timeout, BackInTime)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Block execution of the run stage of a testcase until an event matching <code>Predicate</code> is received or until <code>Timeout</code>.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#causality/5" translate="no">causality(Strict, CauseP, EffectP, Guard, Trace)</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#check_conseq_relation/3" translate="no">check_conseq_relation(ErrorMsg, Relation, L)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Throws an exception when consequitive elements of the list do not comply a binary relationship. Otherwise, returns <code>true</code> if the list is non-empty, and <code>false</code> when it is empty.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#cleanup/0" translate="no">cleanup()</a>
+
+        </div>
+
+          <div class="summary-synopsis">Cleanup the trace and the injected crashes and schedulings</div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#collect_trace/0" translate="no">collect_trace()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#collect_trace/1" translate="no">collect_trace(Timeout)</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#dump_trace/1" translate="no">dump_trace(Trace)</a>
+
+        </div>
+
+          <div class="summary-synopsis">Dump trace to a file and return the file name</div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#erase_timestamps/1" translate="no">erase_timestamps(Trace)</a>
+
+        </div>
+
+          <div class="summary-synopsis">Remove timestamps from the trace events</div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#events_of_kind/2" translate="no">events_of_kind(Kind, Events)</a>
+
+        </div>
+
+          <div class="summary-synopsis">Extract events of certain kind(s) from the trace</div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#find_pairs/4" translate="no">find_pairs(CauseP, EffectP, Guard, L)</a>
+
+        </div>
+
+          <div class="summary-synopsis">Find pairs of complimentary events</div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#fix_ct_logging/0" translate="no">fix_ct_logging()</a>
+
+        </div>
+
+          <div class="summary-synopsis">Redirect all the logs to the console</div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#forward_trace/1" translate="no">forward_trace(Node)</a>
+
+        </div>
+
+          <div class="summary-synopsis">Forward traces from the remote node to the local node.</div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#get_stats/0" translate="no">get_stats()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#increasing/1" translate="no">increasing(L)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Throws an exception when elements of the list are not increasing. Otherwise, returns <code>true</code> if the list is non-empty, and <code>false</code> when it is empty.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#local_tp/5" translate="no">local_tp(Location, Level, Kind, Data, Metadata)</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#mk_all/1" translate="no">mk_all(Module)</a>
+
+        </div>
+
+          <div class="summary-synopsis">Implement <code>all/0</code> callback for Common Test</div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#pair_max_depth/1" translate="no">pair_max_depth(Pairs)</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#projection/2" translate="no">projection(Field, Trace)</a>
+
+        </div>
+
+          <div class="summary-synopsis">Extract specified field(s) from the list of events</div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#projection_complete/3" translate="no">projection_complete(Fields, Trace, Expected)</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#projection_is_subset/3" translate="no">projection_is_subset(Fields, Trace, Expected)</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#push_stat/2" translate="no">push_stat(Metric, Num)</a>
+
+        </div>
+
+          <div class="summary-synopsis">Report a scalar metric</div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#push_stat/3" translate="no">push_stat(Metric, X, Y)</a>
+
+        </div>
+
+          <div class="summary-synopsis">Report a metric with an X value</div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#push_stats/2" translate="no">push_stats(Metric, Pairs)</a>
+
+        </div>
+
+          <div class="summary-synopsis">Report metrics from pairs of events</div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#push_stats/3" translate="no">push_stats(Metric, Bucket, Pairs)</a>
+
+        </div>
+
+          <div class="summary-synopsis">Report multiple values</div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#receive_events/1" translate="no">receive_events(SubRef)</a>
+
+        </div>
+
+          <div class="summary-synopsis">Receive the events for a subscription <code>SubRef</code></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#remote_tp/5" translate="no">remote_tp(Location, Level, Kind, Data, Meta)</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#retry/3" translate="no">retry(Interval, N, Fun)</a>
+
+        </div>
+
+          <div class="summary-synopsis">Retry an action until success, at max N times with an interval <code>Interval</code></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#splitl/2" translate="no">splitl(Pred, L)</a>
+
+        </div>
+
+          <div class="summary-synopsis">Split list by predicate like this:<pre><code class="makeup erlang" translate="no"><span class="w">     </span><span class="p" data-group-id="2209458748-1">[</span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">false</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">false</span><span class="p" data-group-id="2209458748-1">]</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+      </span><span class="p" data-group-id="2209458748-2">[</span><span class="p" data-group-id="2209458748-3">[</span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">false</span><span class="p" data-group-id="2209458748-3">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2209458748-4">[</span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">false</span><span class="p" data-group-id="2209458748-4">]</span><span class="p" data-group-id="2209458748-2">]</span></code></pre></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#splitr/2" translate="no">splitr(Pred, L)</a>
+
+        </div>
+
+          <div class="summary-synopsis">Split list by predicate like this:<pre><code class="makeup erlang" translate="no"><span class="w">     </span><span class="p" data-group-id="4039055629-1">[</span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">false</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">false</span><span class="p" data-group-id="4039055629-1">]</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+      </span><span class="p" data-group-id="4039055629-2">[</span><span class="p" data-group-id="4039055629-3">[</span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p" data-group-id="4039055629-3">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4039055629-4">[</span><span class="ss">false</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p" data-group-id="4039055629-4">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4039055629-5">[</span><span class="ss">false</span><span class="p" data-group-id="4039055629-5">]</span><span class="p" data-group-id="4039055629-2">]</span></code></pre></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#start_trace/0" translate="no">start_trace()</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#stop/0" translate="no">stop()</a>
+
+        </div>
+
+          <div class="summary-synopsis">Stop snabbkaffe</div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#strictly_increasing/1" translate="no">strictly_increasing(L)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Throws an exception when elements of the list are not strictly increasing. Otherwise, returns <code>true</code> if the list is non-empty, and <code>false</code> when it is empty.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#subscribe/1" translate="no">subscribe(Predicate)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Equivalent to <a href="#subscribe/4">subscribe(Predicate, 1, infinity, 0)</a>.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#subscribe/2" translate="no">subscribe(Predicate, Timeout)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Equivalent to <a href="#subscribe/4">subscribe(Predicate, 1, Timeout, 0)</a>.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#subscribe/3" translate="no">subscribe(Predicate, NEvents, Timeout)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Equivalent to <a href="#subscribe/4">subscribe(Predicate, NEvents, Timeout, 0)</a>.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#subscribe/4" translate="no">subscribe(Predicate, NEvents, Timeout, BackInTime)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Subscribe to events matching <code>Predicate`, receive `NEvents</code> of this type, or until <code>Timeout</code> happens, look at most <code>BackInTime</code> milliseconds into the past.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#tp/4" translate="no">tp(Location, Level, Kind, Data)</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#unique/1" translate="no">unique(Trace)</a>
+
+        </div>
+
+          <div class="summary-synopsis">Throw an exception if some event is repeated</div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#wait_async_action/3" translate="no">wait_async_action(Action, Predicate, Timeout)</a>
+
+        </div>
+
+          <div class="summary-synopsis">Install a listener for the event matching <code>Predicate</code>, execute an action, then wait for the event to arrive, or until <code>Timeout</code>.</div>
+
+      </div>
+
+  </div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Types
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:event/0">
+
+  <div class="detail-header">
+    <a href="#t:event/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">event/0</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L87" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">event() :: #{'$kind' := <a href="#t:kind/0">kind</a>(), '~meta' := map(), _ => _}.</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:filter/0">
+
+  <div class="detail-header">
+    <a href="#t:filter/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">filter/0</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L116" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">filter() :: <a href="#t:predicate/0">predicate</a>() | {<a href="#t:predicate/0">predicate</a>(), non_neg_integer()}.</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:kind/0">
+
+  <div class="detail-header">
+    <a href="#t:kind/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">kind/0</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L81" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">kind() :: atom() | string().</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:maybe/1">
+
+  <div class="detail-header">
+    <a href="#t:maybe/1" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">maybe/1</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L104" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">maybe(A) :: {just, A} | nothing.</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:maybe_pair/0">
+
+  <div class="detail-header">
+    <a href="#t:maybe_pair/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">maybe_pair/0</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L101" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">maybe_pair() ::
+    {pair, <a href="#t:timed_event/0">timed_event</a>(), <a href="#t:timed_event/0">timed_event</a>()} | {unmatched_cause | unmatched_effect, <a href="#t:timed_event/0">timed_event</a>()}.</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:metric/0">
+
+  <div class="detail-header">
+    <a href="#t:metric/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">metric/0</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L83" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">metric() :: atom().</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:predicate/0">
+
+  <div class="detail-header">
+    <a href="#t:predicate/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">predicate/0</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L112" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">predicate() :: fun((<a href="#t:event/0">event</a>()) -> boolean()).</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:predicate2/0">
+
+  <div class="detail-header">
+    <a href="#t:predicate2/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">predicate2/0</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L114" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">predicate2() :: fun((<a href="#t:event/0">event</a>(), <a href="#t:event/0">event</a>()) -> boolean()).</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:run_config/0">
+
+  <div class="detail-header">
+    <a href="#t:run_config/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">run_config/0</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L106" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">run_config() :: #{bucket => integer(), timeout => integer(), timetrap => integer()}.</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:timed_event/0">
+
+  <div class="detail-header">
+    <a href="#t:timed_event/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">timed_event/0</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L93" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">timed_event() :: #{'$kind' := <a href="#t:kind/0">kind</a>(), ts := <a href="#t:timestamp/0">timestamp</a>(), _ => _}.</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:timestamp/0">
+
+  <div class="detail-header">
+    <a href="#t:timestamp/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">timestamp/0</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L85" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">timestamp() :: integer().</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:trace/0">
+
+  <div class="detail-header">
+    <a href="#t:trace/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">trace/0</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L99" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">trace() :: [<a href="#t:event/0">event</a>()].</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:trace_spec/1">
+
+  <div class="detail-header">
+    <a href="#t:trace_spec/1" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">trace_spec/1</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L118" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">trace_spec(Result) :: fun((Result, <a href="#t:trace/0">trace</a>()) -> ok | true) | fun((<a href="#t:trace/0">trace</a>()) -> ok | true).</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:trace_specs/1">
+
+  <div class="detail-header">
+    <a href="#t:trace_specs/1" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">trace_specs/1</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L121" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">trace_specs(Result) :: <a href="#t:trace_spec/1">trace_spec</a>(Result) | [<a href="#t:trace_spec/1">trace_spec</a>(Result) | {string(), <a href="#t:trace_spec/1">trace_spec</a>(Result)}].</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Functions
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="analyze_statistics/0">
+
+  <div class="detail-header">
+    <a href="#analyze_statistics/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">analyze_statistics()</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L501" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+Print metrics to the console
+  </section>
+</section>
+<section class="detail" id="block_until/2">
+
+  <div class="detail-header">
+    <a href="#block_until/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">block_until(Filter, Timeout)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L175" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">block_until(<a href="#t:filter/0">filter</a>(), timeout()) -> {ok, <a href="#t:event/0">event</a>()} | timeout.</pre>
+
+      </div>
+
+<p>Equivalent to <a href="#block_until/3">block_until(Filter, Timeout, infinity)</a>.</p>
+  </section>
+</section>
+<section class="detail" id="block_until/3">
+
+  <div class="detail-header">
+    <a href="#block_until/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">block_until(Filter, Timeout, BackInTime)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L213" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">block_until(<a href="#t:filter/0">filter</a>(), timeout(), timeout()) -> <a href="#t:event/0">event</a>() | timeout.</pre>
+
+      </div>
+
+<p>Block execution of the run stage of a testcase until an event matching <code>Predicate</code> is received or until <code>Timeout</code>.</p><p><b>Note</b>: since the most common use case for this function is the following:</p><pre><code class="makeup erlang" translate="no"><span class="w">     </span><span class="nf">trigger_produce_event_async</span><span class="p" data-group-id="2894665765-1">(</span><span class="p" data-group-id="2894665765-1">)</span><span class="p">,</span><span class="w">
+     </span><span class="nc">snabbkaffe</span><span class="p">:</span><span class="nf">block_until</span><span class="p" data-group-id="2894665765-2">(</span><span class="n">MatchEvent</span><span class="p">,</span><span class="w"> </span><span class="mi">1000</span><span class="p" data-group-id="2894665765-2">)</span></code></pre><p>there is a possible situation when the event is emitted before <code>block_until</code> function has a chance to run. In this case the latter will time out for no good reason. In order to work around this, <code>block_until</code> function actually searches for events matching <code>Predicate</code> in the past. <code>BackInTime</code> parameter determines how far back into past this function peeks.</p><b>Note</b>: In the current implementation <code>Predicate</code> runs for every received event. It means this function should be lightweight
+  </section>
+</section>
+<section class="detail" id="causality/5">
+
+  <div class="detail-header">
+    <a href="#causality/5" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">causality(Strict, CauseP, EffectP, Guard, Trace)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L516" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">causality(boolean(),
+          fun((<a href="#t:event/0">event</a>()) -> ok),
+          fun((<a href="#t:event/0">event</a>()) -> ok),
+          fun((<a href="#t:event/0">event</a>(), <a href="#t:event/0">event</a>()) -> boolean()),
+          <a href="#t:trace/0">trace</a>()) ->
+             boolean().</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="check_conseq_relation/3">
+
+  <div class="detail-header">
+    <a href="#check_conseq_relation/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">check_conseq_relation(ErrorMsg, Relation, L)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L634" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">check_conseq_relation(string(), fun((A, A) -> boolean()), [A]) -> boolean().</pre>
+
+      </div>
+
+<p>Throws an exception when consequitive elements of the list do not comply a binary relationship. Otherwise, returns <code>true</code> if the list is non-empty, and <code>false</code> when it is empty.</p>Example:<pre><code class="makeup erlang" translate="no"><span class="w">  </span><span class="n">SeqNums</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="nf">projection</span><span class="p" data-group-id="1207779666-1">(</span><span class="ss">sequence_number</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="nf">of_kind</span><span class="p" data-group-id="1207779666-2">(</span><span class="ss">handle_message</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="1207779666-2">)</span><span class="p" data-group-id="1207779666-1">)</span><span class="p">,</span><span class="w">
+  </span><span class="o">?</span><span class="nf">assert</span><span class="p" data-group-id="1207779666-3">(</span><span class="nc">snabbkaffe</span><span class="p">:</span><span class="nf">check_conseq_relation</span><span class="p" data-group-id="1207779666-4">(</span><span class="n">SeqNums</span><span class="p" data-group-id="1207779666-4">)</span><span class="p" data-group-id="1207779666-3">)</span><span class="p">,</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="cleanup/0">
+
+  <div class="detail-header">
+    <a href="#cleanup/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">cleanup()</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L267" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">cleanup() -> ok.</pre>
+
+      </div>
+
+Cleanup the trace and the injected crashes and schedulings
+  </section>
+</section>
+<section class="detail" id="collect_trace/0">
+
+  <div class="detail-header">
+    <a href="#collect_trace/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">collect_trace()</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L165" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">collect_trace() -> <a href="#t:trace/0">trace</a>().</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="collect_trace/1">
+
+  <div class="detail-header">
+    <a href="#collect_trace/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">collect_trace(Timeout)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L169" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">collect_trace(integer()) -> <a href="#t:trace/0">trace</a>().</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="dump_trace/1">
+
+  <div class="detail-header">
+    <a href="#dump_trace/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">dump_trace(Trace)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L659" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">dump_trace(<a href="#t:trace/0">trace</a>()) -> <a href="https://www.erlang.org/doc/man/file.html#type-filename">file:filename</a>().</pre>
+
+      </div>
+
+Dump trace to a file and return the file name
+  </section>
+</section>
+<section class="detail" id="erase_timestamps/1">
+
+  <div class="detail-header">
+    <a href="#erase_timestamps/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">erase_timestamps(Trace)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L295" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">erase_timestamps(<a href="#t:trace/0">trace</a>()) -> <a href="#t:trace/0">trace</a>().</pre>
+
+      </div>
+
+Remove timestamps from the trace events
+  </section>
+</section>
+<section class="detail" id="events_of_kind/2">
+
+  <div class="detail-header">
+    <a href="#events_of_kind/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">events_of_kind(Kind, Events)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L279" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">events_of_kind(<a href="#t:kind/0">kind</a>() | [<a href="#t:kind/0">kind</a>()], <a href="#t:trace/0">trace</a>()) -> <a href="#t:trace/0">trace</a>().</pre>
+
+      </div>
+
+Extract events of certain kind(s) from the trace
+  </section>
+</section>
+<section class="detail" id="find_pairs/4">
+
+  <div class="detail-header">
+    <a href="#find_pairs/4" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">find_pairs(CauseP, EffectP, Guard, L)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L304" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">find_pairs(fun((<a href="#t:event/0">event</a>()) -> boolean()),
+           fun((<a href="#t:event/0">event</a>()) -> boolean()),
+           fun((<a href="#t:event/0">event</a>(), <a href="#t:event/0">event</a>()) -> boolean()),
+           <a href="#t:trace/0">trace</a>()) ->
+              [<a href="#t:maybe_pair/0">maybe_pair</a>()].</pre>
+
+      </div>
+
+Find pairs of complimentary events
+  </section>
+</section>
+<section class="detail" id="fix_ct_logging/0">
+
+  <div class="detail-header">
+    <a href="#fix_ct_logging/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">fix_ct_logging()</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L433" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">fix_ct_logging() -> ok.</pre>
+
+      </div>
+
+Redirect all the logs to the console
+  </section>
+</section>
+<section class="detail" id="forward_trace/1">
+
+  <div class="detail-header">
+    <a href="#forward_trace/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">forward_trace(Node)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L273" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">forward_trace(node()) -> ok.</pre>
+
+      </div>
+
+Forward traces from the remote node to the local node.
+  </section>
+</section>
+<section class="detail" id="get_stats/0">
+
+  <div class="detail-header">
+    <a href="#get_stats/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">get_stats()</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L496" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">get_stats() -> #{<a href="snabbkaffe.html#t:metric/0">snabbkaffe:metric</a>() => <a href="snabbkaffe_collector.html#t:datapoints/0">snabbkaffe_collector:datapoints</a>()}.</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="increasing/1">
+
+  <div class="detail-header">
+    <a href="#increasing/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">increasing(L)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L618" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">increasing(list()) -> boolean().</pre>
+
+      </div>
+
+<p>Throws an exception when elements of the list are not increasing. Otherwise, returns <code>true</code> if the list is non-empty, and <code>false</code> when it is empty.</p>Example:<pre><code class="makeup erlang" translate="no"><span class="w">  </span><span class="n">SeqNums</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="nf">projection</span><span class="p" data-group-id="6477369165-1">(</span><span class="ss">sequence_number</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="nf">of_kind</span><span class="p" data-group-id="6477369165-2">(</span><span class="ss">handle_message</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="6477369165-2">)</span><span class="p" data-group-id="6477369165-1">)</span><span class="p">,</span><span class="w">
+  </span><span class="o">?</span><span class="nf">assert</span><span class="p" data-group-id="6477369165-3">(</span><span class="nc">snabbkaffe</span><span class="p">:</span><span class="nf">increasing</span><span class="p" data-group-id="6477369165-4">(</span><span class="n">SeqNums</span><span class="p" data-group-id="6477369165-4">)</span><span class="p" data-group-id="6477369165-3">)</span><span class="p">,</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="local_tp/5">
+
+  <div class="detail-header">
+    <a href="#local_tp/5" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">local_tp(Location, Level, Kind, Data, Metadata)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L148" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">local_tp(term(), <a href="https://www.erlang.org/doc/man/logger.html#type-level">logger:level</a>(), <a href="#t:kind/0">kind</a>(), map(), map()) -> ok.</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="mk_all/1">
+
+  <div class="detail-header">
+    <a href="#mk_all/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">mk_all(Module)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L382" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">mk_all(module()) -> [atom() | {group, atom()}].</pre>
+
+      </div>
+
+Implement <code>all/0</code> callback for Common Test
+  </section>
+</section>
+<section class="detail" id="pair_max_depth/1">
+
+  <div class="detail-header">
+    <a href="#pair_max_depth/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">pair_max_depth(Pairs)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L573" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">pair_max_depth([<a href="#t:maybe_pair/0">maybe_pair</a>()]) -> non_neg_integer().</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="projection/2">
+
+  <div class="detail-header">
+    <a href="#projection/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">projection(Field, Trace)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L288" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">projection([atom()] | atom(), <a href="#t:trace/0">trace</a>()) -> list().</pre>
+
+      </div>
+
+Extract specified field(s) from the list of events
+  </section>
+</section>
+<section class="detail" id="projection_complete/3">
+
+  <div class="detail-header">
+    <a href="#projection_complete/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">projection_complete(Fields, Trace, Expected)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L551" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">projection_complete(atom() | [atom()], <a href="#t:trace/0">trace</a>(), [term()]) -> true.</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="projection_is_subset/3">
+
+  <div class="detail-header">
+    <a href="#projection_is_subset/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">projection_is_subset(Fields, Trace, Expected)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L562" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">projection_is_subset(atom() | [atom()], <a href="#t:trace/0">trace</a>(), [term()]) -> true.</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="push_stat/2">
+
+  <div class="detail-header">
+    <a href="#push_stat/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">push_stat(Metric, Num)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L473" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">push_stat(<a href="#t:metric/0">metric</a>(), number()) -> ok.</pre>
+
+      </div>
+
+Report a scalar metric
+  </section>
+</section>
+<section class="detail" id="push_stat/3">
+
+  <div class="detail-header">
+    <a href="#push_stat/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">push_stat(Metric, X, Y)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L478" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">push_stat(<a href="#t:metric/0">metric</a>(), number() | undefined, number()) -> ok.</pre>
+
+      </div>
+
+Report a metric with an X value
+  </section>
+</section>
+<section class="detail" id="push_stats/2">
+
+  <div class="detail-header">
+    <a href="#push_stats/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">push_stats(Metric, Pairs)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L490" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">push_stats(<a href="#t:metric/0">metric</a>(), [<a href="#t:maybe_pair/0">maybe_pair</a>()] | number()) -> ok.</pre>
+
+      </div>
+
+Report metrics from pairs of events
+  </section>
+</section>
+<section class="detail" id="push_stats/3">
+
+  <div class="detail-header">
+    <a href="#push_stats/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">push_stats(Metric, Bucket, Pairs)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L483" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">push_stats(<a href="#t:metric/0">metric</a>(), number(), [<a href="#t:maybe_pair/0">maybe_pair</a>()] | number()) -> ok.</pre>
+
+      </div>
+
+Report multiple values
+  </section>
+</section>
+<section class="detail" id="receive_events/1">
+
+  <div class="detail-header">
+    <a href="#receive_events/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">receive_events(SubRef)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L247" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">receive_events(<a href="snabbkaffe_collector.html#t:subscription/0">snabbkaffe_collector:subscription</a>()) -> {ok | timeout, [<a href="snabbkaffe.html#t:event/0">snabbkaffe:event</a>()]}.</pre>
+
+      </div>
+
+Receive the events for a subscription <code>SubRef</code>
+  </section>
+</section>
+<section class="detail" id="remote_tp/5">
+
+  <div class="detail-header">
+    <a href="#remote_tp/5" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">remote_tp(Location, Level, Kind, Data, Meta)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L156" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">remote_tp(term(), <a href="https://www.erlang.org/doc/man/logger.html#type-level">logger:level</a>(), <a href="#t:kind/0">kind</a>(), map(), map()) -> ok.</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="retry/3">
+
+  <div class="detail-header">
+    <a href="#retry/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">retry(Interval, N, Fun)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L398" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">retry(integer(), non_neg_integer(), fun(() -> Ret)) -> Ret.</pre>
+
+      </div>
+
+Retry an action until success, at max N times with an interval <code>Interval</code>
+  </section>
+</section>
+<section class="detail" id="splitl/2">
+
+  <div class="detail-header">
+    <a href="#splitl/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">splitl(Pred, L)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L370" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">splitl(fun((A) -> boolean()), [A]) -> [[A]].</pre>
+
+      </div>
+
+Split list by predicate like this:<pre><code class="makeup erlang" translate="no"><span class="w">     </span><span class="p" data-group-id="2209458748-1">[</span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">false</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">false</span><span class="p" data-group-id="2209458748-1">]</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+      </span><span class="p" data-group-id="2209458748-2">[</span><span class="p" data-group-id="2209458748-3">[</span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">false</span><span class="p" data-group-id="2209458748-3">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2209458748-4">[</span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">false</span><span class="p" data-group-id="2209458748-4">]</span><span class="p" data-group-id="2209458748-2">]</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="splitr/2">
+
+  <div class="detail-header">
+    <a href="#splitr/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">splitr(Pred, L)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L354" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">splitr(fun((A) -> boolean()), [A]) -> [[A]].</pre>
+
+      </div>
+
+Split list by predicate like this:<pre><code class="makeup erlang" translate="no"><span class="w">     </span><span class="p" data-group-id="4039055629-1">[</span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">false</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">false</span><span class="p" data-group-id="4039055629-1">]</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+      </span><span class="p" data-group-id="4039055629-2">[</span><span class="p" data-group-id="4039055629-3">[</span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p" data-group-id="4039055629-3">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4039055629-4">[</span><span class="ss">false</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p">,</span><span class="w"> </span><span class="ss">true</span><span class="p" data-group-id="4039055629-4">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4039055629-5">[</span><span class="ss">false</span><span class="p" data-group-id="4039055629-5">]</span><span class="p" data-group-id="4039055629-2">]</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="start_trace/0">
+
+  <div class="detail-header">
+    <a href="#start_trace/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">start_trace()</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L251" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">start_trace() -> ok.</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="stop/0">
+
+  <div class="detail-header">
+    <a href="#stop/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">stop()</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L261" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">stop() -> ok.</pre>
+
+      </div>
+
+Stop snabbkaffe
+  </section>
+</section>
+<section class="detail" id="strictly_increasing/1">
+
+  <div class="detail-header">
+    <a href="#strictly_increasing/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">strictly_increasing(L)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L602" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">strictly_increasing(list()) -> boolean().</pre>
+
+      </div>
+
+<p>Throws an exception when elements of the list are not strictly increasing. Otherwise, returns <code>true</code> if the list is non-empty, and <code>false</code> when it is empty.</p>Example:<pre><code class="makeup erlang" translate="no"><span class="w">  </span><span class="n">SeqNums</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="nf">projection</span><span class="p" data-group-id="5667946763-1">(</span><span class="ss">sequence_number</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="nf">of_kind</span><span class="p" data-group-id="5667946763-2">(</span><span class="ss">handle_message</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="5667946763-2">)</span><span class="p" data-group-id="5667946763-1">)</span><span class="p">,</span><span class="w">
+  </span><span class="o">?</span><span class="nf">assert</span><span class="p" data-group-id="5667946763-3">(</span><span class="nc">snabbkaffe</span><span class="p">:</span><span class="nf">strictly_increasing</span><span class="p" data-group-id="5667946763-4">(</span><span class="n">SeqNums</span><span class="p" data-group-id="5667946763-4">)</span><span class="p" data-group-id="5667946763-3">)</span><span class="p">,</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="subscribe/1">
+
+  <div class="detail-header">
+    <a href="#subscribe/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">subscribe(Predicate)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L219" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">subscribe(<a href="snabbkaffe.html#t:predicate/0">snabbkaffe:predicate</a>()) -> {ok, <a href="snabbkaffe_collector.html#t:subscription/0">snabbkaffe_collector:subscription</a>()}.</pre>
+
+      </div>
+
+<p>Equivalent to <a href="#subscribe/4">subscribe(Predicate, 1, infinity, 0)</a>.</p>
+  </section>
+</section>
+<section class="detail" id="subscribe/2">
+
+  <div class="detail-header">
+    <a href="#subscribe/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">subscribe(Predicate, Timeout)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L225" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">subscribe(<a href="snabbkaffe.html#t:predicate/0">snabbkaffe:predicate</a>(), timeout()) -> {ok, <a href="snabbkaffe_collector.html#t:subscription/0">snabbkaffe_collector:subscription</a>()}.</pre>
+
+      </div>
+
+<p>Equivalent to <a href="#subscribe/4">subscribe(Predicate, 1, Timeout, 0)</a>.</p>
+  </section>
+</section>
+<section class="detail" id="subscribe/3">
+
+  <div class="detail-header">
+    <a href="#subscribe/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">subscribe(Predicate, NEvents, Timeout)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L231" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">subscribe(<a href="snabbkaffe.html#t:predicate/0">snabbkaffe:predicate</a>(), non_neg_integer(), timeout()) ->
+             {ok, <a href="snabbkaffe_collector.html#t:subscription/0">snabbkaffe_collector:subscription</a>()}.</pre>
+
+      </div>
+
+<p>Equivalent to <a href="#subscribe/4">subscribe(Predicate, NEvents, Timeout, 0)</a>.</p>
+  </section>
+</section>
+<section class="detail" id="subscribe/4">
+
+  <div class="detail-header">
+    <a href="#subscribe/4" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">subscribe(Predicate, NEvents, Timeout, BackInTime)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L241" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">subscribe(<a href="snabbkaffe.html#t:predicate/0">snabbkaffe:predicate</a>(), non_neg_integer(), timeout(), timeout()) ->
+             {ok, <a href="snabbkaffe_collector.html#t:subscription/0">snabbkaffe_collector:subscription</a>()}.</pre>
+
+      </div>
+
+<p>Subscribe to events matching <code>Predicate`, receive `NEvents</code> of this type, or until <code>Timeout</code> happens, look at most <code>BackInTime</code> milliseconds into the past.</p>The events can be received using <code>receive_events/1</code> function.
+  </section>
+</section>
+<section class="detail" id="tp/4">
+
+  <div class="detail-header">
+    <a href="#tp/4" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">tp(Location, Level, Kind, Data)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L139" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">tp(term(), <a href="https://www.erlang.org/doc/man/logger.html#type-level">logger:level</a>(), <a href="#t:kind/0">kind</a>(), map()) -> ok.</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="unique/1">
+
+  <div class="detail-header">
+    <a href="#unique/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">unique(Trace)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L538" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">unique(<a href="#t:trace/0">trace</a>()) -> true.</pre>
+
+      </div>
+
+Throw an exception if some event is repeated
+  </section>
+</section>
+<section class="detail" id="wait_async_action/3">
+
+  <div class="detail-header">
+    <a href="#wait_async_action/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">wait_async_action(Action, Predicate, Timeout)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/src/snabbkaffe.erl#L182" class="view-source" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre translate="no">wait_async_action(fun(() -> Return), <a href="#t:predicate/0">predicate</a>(), timeout()) -> {Return, {ok, <a href="#t:event/0">event</a>()} | timeout}.</pre>
+
+      </div>
+
+Install a listener for the event matching <code>Predicate</code>, execute an action, then wait for the event to arrive, or until <code>Timeout</code>.
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+
+          <p>
+            On Hex.pm:
+
+            <span class="line">
+              <a href="https://hex.pm/packages/snabbkaffe/0.17.1+build.143.ref8a92a66" class="line footer-hex-package">Package</a>
+              <a href="https://preview.hex.pm/preview/snabbkaffe/0.17.1+build.143.ref8a92a66" class="line">Preview</a>
+
+                <a href="https://preview.hex.pm/preview/snabbkaffe/0.17.1+build.143.ref8a92a66/show/src/snabbkaffe.erl">(current file)</a>
+
+            </span>
+
+            <button class="line footer-button display-quick-switch">
+              Search
+            </button>
+          </p>
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.3) for the
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

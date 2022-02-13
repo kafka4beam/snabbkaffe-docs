@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.27.3">
+    <meta name="project" content="snabbkaffe v0.17.1+build.143.ref8a92a66">
+
+    <title>Offline analysis of the traces — snabbkaffe v0.17.1+build.143.ref8a92a66</title>
+    <link rel="stylesheet" href="dist/erlang-b5092adf780908a19f62.css" />
+
+    <script src="dist/sidebar_items-e99c8dbbd0.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-38f5da25bdde1981e2f0.js"></script>
+
+
+  </head>
+  <body data-type="extras">
+    <script>
+
+      try {
+        if (localStorage.getItem('night-mode') === 'true') {
+          document.body.classList.add('night-mode');
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="readme.html" class="sidebar-projectName" translate="no">
+snabbkaffe
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.17.1+build.143.ref8a92a66
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+    <a href="https://github.com/kafka4beam/snabbkaffe/blob/v0.17.1+build.143.ref8a92a66/doc/src/offline_analysis.md#L1" title="View Source" class="view-source" rel="help">
+      <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+      <span class="sr-only">View Source</span>
+    </a>
+
+  <span>Offline analysis of the traces</span>
+</h1>
+
+<p>Snabbkaffe trace is a regular list, so any pure function or a list comprehension can be used to analyze it.
+Nonetheless, it comes with a few predefined macros and functions for trace analysis.</p><h1>Event correlations</h1><h2 id="strict_causality" class="section-heading">
+  <a href="#strict_causality" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  ?strict_causality
+</h2>
+<p><code class="inline">?strict_causality</code> macro is very powerful.
+It finds pairs of events matching &quot;cause&quot; and &quot;effect&quot; patterns, and verifies that each for each cause there is an effect, and vice versa.</p><p>For example, the following test verifies that every received message eventually gets processed:</p><pre><code class="makeup erlang" translate="no"><span class="p">-</span><span class="na">module</span><span class="p" data-group-id="9448918513-1">(</span><span class="ss">offline_analysis_example</span><span class="p" data-group-id="9448918513-1">)</span><span class="p">.</span><span class="w">
+</span><span class="w">
+</span><span class="p">-</span><span class="na">include_lib</span><span class="p" data-group-id="9448918513-2">(</span><span class="s">&quot;snabbkaffe/include/snabbkaffe.hrl&quot;</span><span class="p" data-group-id="9448918513-2">)</span><span class="p">.</span><span class="w">
+</span><span class="p">-</span><span class="na">include_lib</span><span class="p" data-group-id="9448918513-3">(</span><span class="s">&quot;eunit/include/eunit.hrl&quot;</span><span class="p" data-group-id="9448918513-3">)</span><span class="p">.</span><span class="w">
+
+</span><span class="nf">strict_causality_test</span><span class="p" data-group-id="9448918513-4">(</span><span class="p" data-group-id="9448918513-4">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="n">Trace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="9448918513-5">[</span><span class="p" data-group-id="9448918513-6">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">msg_received</span><span class="p">,</span><span class="w">  </span><span class="ss">id</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="9448918513-6">}</span><span class="p">,</span><span class="w">
+           </span><span class="p" data-group-id="9448918513-7">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">msg_received</span><span class="p">,</span><span class="w">  </span><span class="ss">id</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="9448918513-7">}</span><span class="p">,</span><span class="w">
+           </span><span class="p" data-group-id="9448918513-8">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">unrelated_event</span><span class="p" data-group-id="9448918513-8">}</span><span class="p">,</span><span class="w">
+           </span><span class="p" data-group-id="9448918513-9">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">msg_processed</span><span class="p">,</span><span class="w"> </span><span class="ss">id</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="9448918513-9">}</span><span class="p">,</span><span class="w">
+           </span><span class="p" data-group-id="9448918513-10">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">msg_received</span><span class="p">,</span><span class="w">  </span><span class="ss">id</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="9448918513-10">}</span><span class="p">,</span><span class="w">
+           </span><span class="p" data-group-id="9448918513-11">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">msg_processed</span><span class="p">,</span><span class="w"> </span><span class="ss">id</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="9448918513-11">}</span><span class="p">,</span><span class="w">
+           </span><span class="p" data-group-id="9448918513-12">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">msg_processed</span><span class="p">,</span><span class="w"> </span><span class="ss">id</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="9448918513-12">}</span><span class="w">
+          </span><span class="p" data-group-id="9448918513-5">]</span><span class="p">,</span><span class="w">
+  </span><span class="o">?</span><span class="nf">assert</span><span class="p" data-group-id="9448918513-13">(</span><span class="w">
+    </span><span class="o">?</span><span class="nf">strict_causality</span><span class="p" data-group-id="9448918513-14">(</span><span class="p" data-group-id="9448918513-15">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">msg_received</span><span class="p">,</span><span class="w">  </span><span class="ss">id</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="p">_</span><span class="n">Id</span><span class="p" data-group-id="9448918513-15">}</span><span class="p">,</span><span class="w"> </span><span class="c1">%% Match cause</span><span class="w">
+                      </span><span class="p" data-group-id="9448918513-16">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">msg_processed</span><span class="p">,</span><span class="w"> </span><span class="ss">id</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="p">_</span><span class="n">Id</span><span class="p" data-group-id="9448918513-16">}</span><span class="p">,</span><span class="w"> </span><span class="c1">%% Match event</span><span class="w">
+                      </span><span class="n">Trace</span><span class="p" data-group-id="9448918513-14">)</span><span class="p" data-group-id="9448918513-13">)</span><span class="p">.</span></code></pre><p>There is an extended version of the macro that allows to extend pattern matching with a guard expression, that can contain arbitrary code:</p><p>Suppose we’re testing a “integer_to_list server”.
+The following code is all that is needed to express the property
+&quot;every request containing a certain number should be eventually replied with the number converted to the list&quot;:</p><pre><code class="makeup erlang" translate="no"><span class="nf">to_string_server_test</span><span class="p" data-group-id="1881746915-1">(</span><span class="p" data-group-id="1881746915-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="n">ExampleTrace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="1881746915-2">[</span><span class="p" data-group-id="1881746915-3">#{</span><span class="ss">request</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="1881746915-3">}</span><span class="p">,</span><span class="w">
+                  </span><span class="p" data-group-id="1881746915-4">#{</span><span class="ss">reply</span><span class="w">   </span><span class="p">=&gt;</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p" data-group-id="1881746915-4">}</span><span class="p">,</span><span class="w">
+                  </span><span class="p" data-group-id="1881746915-5">#{</span><span class="ss">request</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">4</span><span class="p" data-group-id="1881746915-5">}</span><span class="p">,</span><span class="w">
+                  </span><span class="p" data-group-id="1881746915-6">#{</span><span class="ss">request</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">4</span><span class="p" data-group-id="1881746915-6">}</span><span class="p">,</span><span class="w">
+                  </span><span class="p" data-group-id="1881746915-7">#{</span><span class="ss">reply</span><span class="w">   </span><span class="p">=&gt;</span><span class="w"> </span><span class="s">&quot;4&quot;</span><span class="p" data-group-id="1881746915-7">}</span><span class="p">,</span><span class="w">
+                  </span><span class="p" data-group-id="1881746915-8">#{</span><span class="ss">reply</span><span class="w">   </span><span class="p">=&gt;</span><span class="w"> </span><span class="s">&quot;4&quot;</span><span class="p" data-group-id="1881746915-8">}</span><span class="p" data-group-id="1881746915-2">]</span><span class="p">,</span><span class="w">
+  </span><span class="o">?</span><span class="nf">assert</span><span class="p" data-group-id="1881746915-9">(</span><span class="w">
+    </span><span class="o">?</span><span class="nf">strict_causality</span><span class="p" data-group-id="1881746915-10">(</span><span class="p" data-group-id="1881746915-11">#{</span><span class="ss">request</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="p">_</span><span class="n">Req</span><span class="p" data-group-id="1881746915-11">}</span><span class="p">,</span><span class="w">                </span><span class="c1">%% Match cause</span><span class="w">
+                      </span><span class="p" data-group-id="1881746915-12">#{</span><span class="ss">reply</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="p">_</span><span class="n">Resp</span><span class="p" data-group-id="1881746915-12">}</span><span class="p">,</span><span class="w">                 </span><span class="c1">%% Match effect</span><span class="w">
+                      </span><span class="p">_</span><span class="n">Resp</span><span class="w"> </span><span class="o">=:=</span><span class="w"> </span><span class="nf">integer_to_list</span><span class="p" data-group-id="1881746915-13">(</span><span class="p">_</span><span class="n">Req</span><span class="p" data-group-id="1881746915-13">)</span><span class="p">,</span><span class="w">   </span><span class="c1">%% Guard</span><span class="w">
+                      </span><span class="n">ExampleTrace</span><span class="p" data-group-id="1881746915-10">)</span><span class="p" data-group-id="1881746915-9">)</span><span class="p">.</span></code></pre><p>The return value of both macros is:</p><ul><li><code class="inline">true</code> when pairs of events were found.</li><li><code class="inline">false</code> when the macro didn't find any matching events (neither causes nor effects).</li><li>An exception is thrown when there are unmatched causes or effects.
+It is recommended to wrap this macro in an <code class="inline">?assert</code> to verify that it actually matched the pairs of events.</li></ul><p>A few notes on the variable binding inside <code class="inline">?strict_causality</code>-like macros:</p><ul><li>Variable bindings from outside of the macro are propagated into the match expression, e.g.<pre><code class="makeup erlang" translate="no"><span class="n">Id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+</span><span class="o">?</span><span class="nf">strict_causality</span><span class="p" data-group-id="3022653338-1">(</span><span class="p" data-group-id="3022653338-2">#{</span><span class="ss">req</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="n">Id</span><span class="p" data-group-id="3022653338-2">}</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p" data-group-id="3022653338-1">)</span></code></pre>will only match events with <code class="inline">req := 2</code>.</li><li>Variable bindings from the &quot;cause&quot; match expression are propagated to the &quot;effect&quot; match expression.</li><li>Variable bindings from both &quot;cause&quot; and &quot;effect&quot; expressions are propagated to the guard expression.</li></ul><h2 id="causality" class="section-heading">
+  <a href="#causality" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  ?causality
+</h2>
+<p><code class="inline">?causality</code> macros work similarly to <code class="inline">?strict_causality</code>, except they allow unmatched causes.
+For example, they can be used in the situations where some message loss is allowed.</p><h2 id="find_pairs" class="section-heading">
+  <a href="#find_pairs" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  ?find_pairs
+</h2>
+<p><code class="inline">?find_pairs</code> is a macro that works similarly to <code class="inline">?strict_causality</code>, except it returns the list of pairs and unmatched causes and effects:</p><pre><code class="makeup erlang" translate="no"><span class="nf">find_pairs_test</span><span class="p" data-group-id="6268611116-1">(</span><span class="p" data-group-id="6268611116-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="n">ExampleTrace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="6268611116-2">[</span><span class="p" data-group-id="6268611116-3">#{</span><span class="ss">request</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="6268611116-3">}</span><span class="p">,</span><span class="w">
+                  </span><span class="p" data-group-id="6268611116-4">#{</span><span class="ss">reply</span><span class="w">   </span><span class="p">=&gt;</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p" data-group-id="6268611116-4">}</span><span class="p">,</span><span class="w">
+                  </span><span class="p" data-group-id="6268611116-5">#{</span><span class="ss">request</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">4</span><span class="p" data-group-id="6268611116-5">}</span><span class="p">,</span><span class="w">
+                  </span><span class="p" data-group-id="6268611116-6">#{</span><span class="ss">request</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">4</span><span class="p" data-group-id="6268611116-6">}</span><span class="p">,</span><span class="w">
+                  </span><span class="p" data-group-id="6268611116-7">#{</span><span class="ss">reply</span><span class="w">   </span><span class="p">=&gt;</span><span class="w"> </span><span class="s">&quot;4&quot;</span><span class="p" data-group-id="6268611116-7">}</span><span class="p">,</span><span class="w">
+                  </span><span class="p" data-group-id="6268611116-8">#{</span><span class="ss">reply</span><span class="w">   </span><span class="p">=&gt;</span><span class="w"> </span><span class="s">&quot;5&quot;</span><span class="p" data-group-id="6268611116-8">}</span><span class="p" data-group-id="6268611116-2">]</span><span class="p">,</span><span class="w">
+  </span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="6268611116-9">(</span><span class="w">
+    </span><span class="p" data-group-id="6268611116-10">[</span><span class="p" data-group-id="6268611116-11">{</span><span class="ss">pair</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6268611116-12">#{</span><span class="ss">request</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="6268611116-12">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6268611116-13">#{</span><span class="ss">reply</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p" data-group-id="6268611116-13">}</span><span class="p" data-group-id="6268611116-11">}</span><span class="p">,</span><span class="w">
+     </span><span class="p" data-group-id="6268611116-14">{</span><span class="ss">pair</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6268611116-15">#{</span><span class="ss">request</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="mi">4</span><span class="p" data-group-id="6268611116-15">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6268611116-16">#{</span><span class="ss">reply</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="s">&quot;4&quot;</span><span class="p" data-group-id="6268611116-16">}</span><span class="p" data-group-id="6268611116-14">}</span><span class="p">,</span><span class="w">
+     </span><span class="p" data-group-id="6268611116-17">{</span><span class="ss">unmatched_cause</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6268611116-18">#{</span><span class="ss">request</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="mi">4</span><span class="p" data-group-id="6268611116-18">}</span><span class="p" data-group-id="6268611116-17">}</span><span class="p">,</span><span class="w">
+     </span><span class="p" data-group-id="6268611116-19">{</span><span class="ss">unmatched_effect</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6268611116-20">#{</span><span class="ss">reply</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="s">&quot;5&quot;</span><span class="p" data-group-id="6268611116-20">}</span><span class="p" data-group-id="6268611116-19">}</span><span class="w">
+    </span><span class="p" data-group-id="6268611116-10">]</span><span class="p">,</span><span class="w">
+    </span><span class="o">?</span><span class="nf">find_pairs</span><span class="p" data-group-id="6268611116-21">(</span><span class="p" data-group-id="6268611116-22">#{</span><span class="ss">request</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="p">_</span><span class="n">Req</span><span class="p" data-group-id="6268611116-22">}</span><span class="p">,</span><span class="w">                </span><span class="c1">%% Match cause</span><span class="w">
+                </span><span class="p" data-group-id="6268611116-23">#{</span><span class="ss">reply</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="p">_</span><span class="n">Resp</span><span class="p" data-group-id="6268611116-23">}</span><span class="p">,</span><span class="w">                 </span><span class="c1">%% Match effect</span><span class="w">
+                </span><span class="p">_</span><span class="n">Resp</span><span class="w"> </span><span class="o">=:=</span><span class="w"> </span><span class="nf">integer_to_list</span><span class="p" data-group-id="6268611116-24">(</span><span class="p">_</span><span class="n">Req</span><span class="p" data-group-id="6268611116-24">)</span><span class="p">,</span><span class="w">   </span><span class="c1">%% Guard</span><span class="w">
+                </span><span class="n">ExampleTrace</span><span class="p" data-group-id="6268611116-21">)</span><span class="p" data-group-id="6268611116-9">)</span><span class="p">.</span></code></pre><p>A simple version without the guard is present too.</p><h2 id="pair_max_depth" class="section-heading">
+  <a href="#pair_max_depth" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  ?pair_max_depth
+</h2>
+<p><code class="inline">?pair_max_depth</code> macro takes a list of pairs produced by <code class="inline">?find_pairs</code> macro and returns maximum nesting level of pairs.
+Its usecase is verification of overload protection routines.
+Suppose the system has a load limiter that prevents it from running more than N parallel tasks.
+<code class="inline">?pair_max_depth</code> helps verifying this property.</p><h2 id="strictly_increasing" class="section-heading">
+  <a href="#strictly_increasing" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  strictly_increasing
+</h2>
+<p><code class="inline">snabbkaffe:strictly_increasing(List)</code> function verifies <code class="inline">A &gt; B &gt; C &gt; ...</code> relation holds for all elements of the list:</p><pre><code class="makeup erlang" translate="no"><span class="nf">strictly_increasing_test</span><span class="p" data-group-id="5122633553-1">(</span><span class="p" data-group-id="5122633553-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="o">?</span><span class="nf">assert</span><span class="p" data-group-id="5122633553-2">(</span><span class="nc">snabbkaffe</span><span class="p">:</span><span class="nf">strictly_increasing</span><span class="p" data-group-id="5122633553-3">(</span><span class="p" data-group-id="5122633553-4">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p" data-group-id="5122633553-4">]</span><span class="p" data-group-id="5122633553-3">)</span><span class="p" data-group-id="5122633553-2">)</span><span class="p">,</span><span class="w">
+  </span><span class="o">?</span><span class="nf">assertNot</span><span class="p" data-group-id="5122633553-5">(</span><span class="nc">snabbkaffe</span><span class="p">:</span><span class="nf">strictly_increasing</span><span class="p" data-group-id="5122633553-6">(</span><span class="p" data-group-id="5122633553-7">[</span><span class="p" data-group-id="5122633553-7">]</span><span class="p" data-group-id="5122633553-6">)</span><span class="p" data-group-id="5122633553-5">)</span><span class="p">,</span><span class="w">
+  </span><span class="o">?</span><span class="nf">assertError</span><span class="p" data-group-id="5122633553-8">(</span><span class="p">_</span><span class="p">,</span><span class="w"> </span><span class="nc">snabbkaffe</span><span class="p">:</span><span class="nf">strictly_increasing</span><span class="p" data-group-id="5122633553-9">(</span><span class="p" data-group-id="5122633553-10">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="5122633553-10">]</span><span class="p" data-group-id="5122633553-9">)</span><span class="p" data-group-id="5122633553-8">)</span><span class="p">.</span></code></pre><p>It returns <code class="inline">true</code> when the list is not empty and the elements of the list are increasing,
+<code class="inline">false</code> when the list is empty,
+and throws an exception when the property is violated.</p><h2 id="increasing" class="section-heading">
+  <a href="#increasing" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  increasing
+</h2>
+<p><code class="inline">snabbkaffe:increasing(List)</code> function is similar to <code class="inline">strictly_increasing</code>, except it checks <code class="inline">&gt;=</code> property.</p><h1>Filtering events</h1><h2 id="of_kind" class="section-heading">
+  <a href="#of_kind" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  ?of_kind
+</h2>
+<p>This macro extracts events of certain kind or kinds:</p><pre><code class="makeup erlang" translate="no"><span class="nf">of_kind_test</span><span class="p" data-group-id="4881508026-1">(</span><span class="p" data-group-id="4881508026-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+    </span><span class="n">Trace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="4881508026-2">[</span><span class="p" data-group-id="4881508026-3">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">foo</span><span class="p" data-group-id="4881508026-3">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4881508026-4">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">bar</span><span class="p" data-group-id="4881508026-4">}</span><span class="p" data-group-id="4881508026-2">]</span><span class="p">,</span><span class="w">
+    </span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="4881508026-5">(</span><span class="p" data-group-id="4881508026-6">[</span><span class="p" data-group-id="4881508026-7">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">foo</span><span class="p" data-group-id="4881508026-7">}</span><span class="p" data-group-id="4881508026-6">]</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="nf">of_kind</span><span class="p" data-group-id="4881508026-8">(</span><span class="ss">foo</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="4881508026-8">)</span><span class="p" data-group-id="4881508026-5">)</span><span class="p">,</span><span class="w">
+    </span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="4881508026-9">(</span><span class="p" data-group-id="4881508026-10">[</span><span class="p" data-group-id="4881508026-11">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">foo</span><span class="p" data-group-id="4881508026-11">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4881508026-12">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">bar</span><span class="p" data-group-id="4881508026-12">}</span><span class="p" data-group-id="4881508026-10">]</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="nf">of_kind</span><span class="p" data-group-id="4881508026-13">(</span><span class="p" data-group-id="4881508026-14">[</span><span class="ss">foo</span><span class="p">,</span><span class="w"> </span><span class="ss">bar</span><span class="p" data-group-id="4881508026-14">]</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="4881508026-13">)</span><span class="p" data-group-id="4881508026-9">)</span><span class="p">.</span></code></pre><h2 id="of_domain" class="section-heading">
+  <a href="#of_domain" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  ?of_domain
+</h2>
+<p><code class="inline">?of_domain</code> macro extracts events that were produced from processes with a specified logger domain.
+It supports match expressions, e.g.:</p><pre><code class="makeup erlang" translate="no"><span class="nf">of_domain_test</span><span class="p" data-group-id="8898886421-1">(</span><span class="p" data-group-id="8898886421-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+   </span><span class="o">?</span><span class="nf">check_trace</span><span class="p" data-group-id="8898886421-2">(</span><span class="w">
+     </span><span class="k">begin</span><span class="w">
+       </span><span class="nc">logger</span><span class="p">:</span><span class="nf">update_process_metadata</span><span class="p" data-group-id="8898886421-3">(</span><span class="p" data-group-id="8898886421-4">#{</span><span class="ss">domain</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="8898886421-5">[</span><span class="ss">my</span><span class="p">,</span><span class="w"> </span><span class="ss">domain</span><span class="p" data-group-id="8898886421-5">]</span><span class="p" data-group-id="8898886421-4">}</span><span class="p" data-group-id="8898886421-3">)</span><span class="p">,</span><span class="w">
+       </span><span class="o">?</span><span class="nf">tp</span><span class="p" data-group-id="8898886421-6">(</span><span class="ss">foo</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8898886421-7">#{</span><span class="p" data-group-id="8898886421-7">}</span><span class="p" data-group-id="8898886421-6">)</span><span class="w">
+     </span><span class="k">end</span><span class="p">,</span><span class="w">
+     </span><span class="nf">fun</span><span class="p" data-group-id="8898886421-8">(</span><span class="n">Trace</span><span class="p" data-group-id="8898886421-8">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+       </span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="8898886421-9">(</span><span class="p" data-group-id="8898886421-10">[</span><span class="p" data-group-id="8898886421-11">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">foo</span><span class="p" data-group-id="8898886421-11">}</span><span class="p" data-group-id="8898886421-10">]</span><span class="p">,</span><span class="w">
+                    </span><span class="o">?</span><span class="nf">of_domain</span><span class="p" data-group-id="8898886421-12">(</span><span class="p" data-group-id="8898886421-13">[</span><span class="ss">my</span><span class="p">|</span><span class="p">_</span><span class="p" data-group-id="8898886421-13">]</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="8898886421-12">)</span><span class="p" data-group-id="8898886421-9">)</span><span class="w">
+     </span><span class="k">end</span><span class="p" data-group-id="8898886421-2">)</span><span class="p">.</span></code></pre><h2 id="of_node" class="section-heading">
+  <a href="#of_node" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  ?of_node
+</h2>
+<p><code class="inline">?of_node</code> macro extracts events that were produced on the specified node:</p><pre><code class="makeup erlang" translate="no"><span class="nf">of_node_test</span><span class="p" data-group-id="6905907339-1">(</span><span class="p" data-group-id="6905907339-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+   </span><span class="o">?</span><span class="nf">check_trace</span><span class="p" data-group-id="6905907339-2">(</span><span class="w">
+     </span><span class="k">begin</span><span class="w">
+       </span><span class="o">?</span><span class="nf">tp</span><span class="p" data-group-id="6905907339-3">(</span><span class="ss">foo</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6905907339-4">#{</span><span class="p" data-group-id="6905907339-4">}</span><span class="p" data-group-id="6905907339-3">)</span><span class="w">
+     </span><span class="k">end</span><span class="p">,</span><span class="w">
+     </span><span class="nf">fun</span><span class="p" data-group-id="6905907339-5">(</span><span class="n">Trace</span><span class="p" data-group-id="6905907339-5">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+       </span><span class="n">ThisNode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">node</span><span class="p" data-group-id="6905907339-6">(</span><span class="p" data-group-id="6905907339-6">)</span><span class="p">,</span><span class="w">
+       </span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="6905907339-7">(</span><span class="p" data-group-id="6905907339-8">[</span><span class="p" data-group-id="6905907339-9">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">foo</span><span class="p" data-group-id="6905907339-9">}</span><span class="p" data-group-id="6905907339-8">]</span><span class="p">,</span><span class="w">
+                    </span><span class="o">?</span><span class="nf">of_node</span><span class="p" data-group-id="6905907339-10">(</span><span class="n">ThisNode</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="6905907339-10">)</span><span class="p" data-group-id="6905907339-7">)</span><span class="w">
+     </span><span class="k">end</span><span class="p" data-group-id="6905907339-2">)</span><span class="p">.</span></code></pre><h1>Splitting traces</h1><h2 id="split_trace_at" class="section-heading">
+  <a href="#split_trace_at" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  ?split_trace_at
+</h2>
+<p><code class="inline">?split_trace_at</code> macro splits the trace into two parts: before and after the first occurrence of an event matching a pattern:</p><pre><code class="makeup erlang" translate="no"><span class="nf">split_trace_at_test</span><span class="p" data-group-id="5413551192-1">(</span><span class="p" data-group-id="5413551192-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="n">Trace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="5413551192-2">[</span><span class="p" data-group-id="5413551192-3">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">foo</span><span class="p" data-group-id="5413551192-3">}</span><span class="p">,</span><span class="w">
+           </span><span class="p" data-group-id="5413551192-4">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">bar</span><span class="p" data-group-id="5413551192-4">}</span><span class="p">,</span><span class="w">
+           </span><span class="p" data-group-id="5413551192-5">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">baz</span><span class="p" data-group-id="5413551192-5">}</span><span class="p">,</span><span class="w">
+           </span><span class="p" data-group-id="5413551192-6">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">quux</span><span class="p" data-group-id="5413551192-6">}</span><span class="p">,</span><span class="w">
+           </span><span class="p" data-group-id="5413551192-7">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">baz</span><span class="p" data-group-id="5413551192-7">}</span><span class="w">
+          </span><span class="p" data-group-id="5413551192-2">]</span><span class="p">,</span><span class="w">
+  </span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="5413551192-8">(</span><span class="w"> </span><span class="p" data-group-id="5413551192-9">{</span><span class="p" data-group-id="5413551192-10">[</span><span class="p" data-group-id="5413551192-11">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">foo</span><span class="p" data-group-id="5413551192-11">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5413551192-12">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">bar</span><span class="p" data-group-id="5413551192-12">}</span><span class="p" data-group-id="5413551192-10">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5413551192-13">[</span><span class="p" data-group-id="5413551192-14">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">baz</span><span class="p" data-group-id="5413551192-14">}</span><span class="p">|</span><span class="p">_</span><span class="p" data-group-id="5413551192-13">]</span><span class="p" data-group-id="5413551192-9">}</span><span class="w">
+              </span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="nf">split_trace_at</span><span class="p" data-group-id="5413551192-15">(</span><span class="p" data-group-id="5413551192-16">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">baz</span><span class="p" data-group-id="5413551192-16">}</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="5413551192-15">)</span><span class="w">
+              </span><span class="p" data-group-id="5413551192-8">)</span><span class="p">.</span></code></pre><p>This macro is useful when the SUT changes state in some way, and its behavior is dependent on the state.
+The SUT should a emit an event indicating the state change.
+This event can be used in the check stage to split the trace in two parts, that can be analysed by two different rules.</p><h2 id="splitl_trace" class="section-heading">
+  <a href="#splitl_trace" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  ?splitl_trace
+</h2>
+<p><code class="inline">?splitr_trace</code> macro splits the list into multiple lists, where each sublist ends with an element that matches the pattern:</p><pre><code class="makeup erlang" translate="no"><span class="nf">splitl_macro_test</span><span class="p" data-group-id="5447833786-1">(</span><span class="p" data-group-id="5447833786-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="n">Trace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="5447833786-2">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">foo</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="ss">foo</span><span class="p" data-group-id="5447833786-2">]</span><span class="p">,</span><span class="w">
+  </span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="5447833786-3">(</span><span class="w"> </span><span class="p" data-group-id="5447833786-4">[</span><span class="p" data-group-id="5447833786-5">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">foo</span><span class="p" data-group-id="5447833786-5">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="5447833786-6">[</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="ss">foo</span><span class="p" data-group-id="5447833786-6">]</span><span class="p" data-group-id="5447833786-4">]</span><span class="w">
+              </span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="nf">splitl_trace</span><span class="p" data-group-id="5447833786-7">(</span><span class="ss">foo</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="5447833786-7">)</span><span class="w">
+              </span><span class="p" data-group-id="5447833786-3">)</span><span class="p">.</span></code></pre><h2 id="splitr_trace" class="section-heading">
+  <a href="#splitr_trace" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  ?splitr_trace
+</h2>
+<p><code class="inline">?splitr_trace</code> macro splits the list into multiple lists, where each sublist begins from an element that matches the pattern:</p><pre><code class="makeup erlang" translate="no"><span class="nf">splitr_macro_test</span><span class="p" data-group-id="7300426898-1">(</span><span class="p" data-group-id="7300426898-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="n">Trace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="7300426898-2">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">foo</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="ss">foo</span><span class="p" data-group-id="7300426898-2">]</span><span class="p">,</span><span class="w">
+  </span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="7300426898-3">(</span><span class="w"> </span><span class="p" data-group-id="7300426898-4">[</span><span class="p" data-group-id="7300426898-5">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="7300426898-5">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7300426898-6">[</span><span class="ss">foo</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p" data-group-id="7300426898-6">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7300426898-7">[</span><span class="ss">foo</span><span class="p" data-group-id="7300426898-7">]</span><span class="p" data-group-id="7300426898-4">]</span><span class="w">
+              </span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="nf">splitr_trace</span><span class="p" data-group-id="7300426898-8">(</span><span class="n">E</span><span class="w"> </span><span class="k">when</span><span class="w"> </span><span class="nf">is_atom</span><span class="p" data-group-id="7300426898-9">(</span><span class="n">E</span><span class="p" data-group-id="7300426898-9">)</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="7300426898-8">)</span><span class="w">
+              </span><span class="p" data-group-id="7300426898-3">)</span><span class="p">.</span></code></pre><h1>Transforming events</h1><h2 id="projection" class="section-heading">
+  <a href="#projection" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  ?projection
+</h2>
+<p><code class="inline">?projection</code> macro simplifies processing of the events by extracting values of their fields.
+It can extract one or multiple fields from the event:</p><pre><code class="makeup erlang" translate="no"><span class="nf">projection_single_field_test</span><span class="p" data-group-id="0759020455-1">(</span><span class="p" data-group-id="0759020455-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="n">Trace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="0759020455-2">[</span><span class="p" data-group-id="0759020455-3">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">foo</span><span class="p">,</span><span class="w"> </span><span class="ss">field1</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="0759020455-3">}</span><span class="p">,</span><span class="w">
+           </span><span class="p" data-group-id="0759020455-4">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">foo</span><span class="p">,</span><span class="w"> </span><span class="ss">field1</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="0759020455-4">}</span><span class="p" data-group-id="0759020455-2">]</span><span class="p">,</span><span class="w">
+  </span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="0759020455-5">(</span><span class="p" data-group-id="0759020455-6">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="0759020455-6">]</span><span class="p">,</span><span class="w">
+               </span><span class="o">?</span><span class="nf">projection</span><span class="p" data-group-id="0759020455-7">(</span><span class="ss">field1</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="0759020455-7">)</span><span class="p" data-group-id="0759020455-5">)</span><span class="p">.</span></code></pre><pre><code class="makeup erlang" translate="no"><span class="nf">projection_test</span><span class="p" data-group-id="4898482987-1">(</span><span class="p" data-group-id="4898482987-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="n">Trace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="4898482987-2">[</span><span class="p" data-group-id="4898482987-3">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">foo</span><span class="p">,</span><span class="w"> </span><span class="ss">field1</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="4898482987-3">}</span><span class="p">,</span><span class="w">
+           </span><span class="p" data-group-id="4898482987-4">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ss">foo</span><span class="p">,</span><span class="w"> </span><span class="ss">field1</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="4898482987-4">}</span><span class="p" data-group-id="4898482987-2">]</span><span class="p">,</span><span class="w">
+  </span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="4898482987-5">(</span><span class="p" data-group-id="4898482987-6">[</span><span class="p" data-group-id="4898482987-7">{</span><span class="ss">foo</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="4898482987-7">}</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4898482987-8">{</span><span class="ss">foo</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="4898482987-8">}</span><span class="p" data-group-id="4898482987-6">]</span><span class="p">,</span><span class="w">
+               </span><span class="o">?</span><span class="nf">projection</span><span class="p" data-group-id="4898482987-9">(</span><span class="p" data-group-id="4898482987-10">[</span><span class="o">?</span><span class="ss">snk_kind</span><span class="p">,</span><span class="w"> </span><span class="ss">field1</span><span class="p" data-group-id="4898482987-10">]</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="4898482987-9">)</span><span class="p" data-group-id="4898482987-5">)</span><span class="p">.</span></code></pre><h1>Misc. functions</h1><h2 id="give_or_take" class="section-heading">
+  <a href="#give_or_take" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  ?give_or_take
+</h2>
+<p><code class="inline">?give_or_take</code> macro can be used for approximate matching of numeric values:</p><pre><code class="makeup erlang" translate="no"><span class="o">?</span><span class="nf">give_or_take</span><span class="p" data-group-id="2657559626-1">(</span><span class="p">_</span><span class="n">Expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="n">Deviation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">Value</span><span class="p" data-group-id="2657559626-1">)</span></code></pre><h2 id="snabbkaffe-unique-1" class="section-heading">
+  <a href="#snabbkaffe-unique-1" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a>
+  snabbkaffe:unique/1
+</h2>
+<p><code class="inline">snabbkaffe:unique(Trace)</code> will raise an exception of some event in the trace is repeated.
+It ignores the timestamps.</p>
+<div class="bottom-actions">
+  <div class="bottom-actions-item">
+
+      <a href="waiting_events.html" class="bottom-actions-button" rel="prev">
+        <span class="subheader">
+          ← Previous Page
+        </span>
+        <span class="title">
+Waiting for events during run stage
+        </span>
+      </a>
+
+  </div>
+  <div class="bottom-actions-item">
+
+      <a href="fault_injection.html" class="bottom-actions-button" rel="next">
+        <span class="subheader">
+          Next Page →
+        </span>
+        <span class="title">
+Injecting faults into the SUT
+        </span>
+      </a>
+
+  </div>
+</div>
+
+      <footer class="footer">
+
+          <p>
+            On Hex.pm:
+
+            <span class="line">
+              <a href="https://hex.pm/packages/snabbkaffe/0.17.1+build.143.ref8a92a66" class="line footer-hex-package">Package</a>
+              <a href="https://preview.hex.pm/preview/snabbkaffe/0.17.1+build.143.ref8a92a66" class="line">Preview</a>
+
+                <a href="https://preview.hex.pm/preview/snabbkaffe/0.17.1+build.143.ref8a92a66/show/doc/src/offline_analysis.md">(current file)</a>
+
+            </span>
+
+            <button class="line footer-button display-quick-switch">
+              Search
+            </button>
+          </p>
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.27.3) for the
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>
