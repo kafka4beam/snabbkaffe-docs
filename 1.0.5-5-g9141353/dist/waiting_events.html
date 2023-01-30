@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.29.1">
+    <meta name="project" content="snabbkaffe v1.0.5+build.183.ref9141353">
+
+    <title>Waiting for events during run stage — snabbkaffe v1.0.5+build.183.ref9141353</title>
+    <link rel="stylesheet" href="dist/html-erlang-6FXMBT73.css" />
+
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-IV5W3OL2.js"></script>
+    <script src="dist/sidebar_items-8544A48C.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/html-XN2TSG4M.js"></script>
+
+
+  </head>
+  <body data-type="extras" class="page-extra">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="readme.html" class="sidebar-projectName" translate="no">
+snabbkaffe
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v1.0.5+build.183.ref9141353
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="icon-action display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+    <a href="https://github.com/kafka4beam/snabbkaffe/blob/v1.0.5+build.183.ref9141353/doc/src/waiting_events.md#L1" title="View Source" class="icon-action" rel="help">
+      <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+      <span class="sr-only">View Source</span>
+    </a>
+
+
+  <span>Waiting for events during run stage</span>
+</h1>
+
+<p>Snabbkaffe encourages to perform validation offline, in the check stage of the testcase.
+However, some properties are impossible to verify offline.
+Also the run stage may want to be aware of the SUT's state for one reason or another:
+for example the testcase should know when the SUT is ready to accept test traffic, and when it is done processing it.</p><p>To accommodate these needs, snabbkaffe allows to subscribe to the events in real time.
+There are a few helpful macros and functions for this.</p><h2 id="block_until" class="section-heading">
+  <a href="#block_until" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">block_until</p>
+  </a>
+  block_until
+</h2>
+<p>In the simplest case, <code class="inline">?block_until</code> macro can be used.
+As the name suggests, it blocks execution of the testcase until an event matching a pattern is emitted:</p><pre><code class="makeup erlang" translate="no"><span class="p">-</span><span class="na">module</span><span class="p" data-group-id="4635002794-1">(</span><span class="ss">waiting_events_example</span><span class="p" data-group-id="4635002794-1">)</span><span class="p">.</span><span class="w">
+</span><span class="w">
+</span><span class="p">-</span><span class="na">include_lib</span><span class="p" data-group-id="4635002794-2">(</span><span class="s">&quot;eunit/include/eunit.hrl&quot;</span><span class="p" data-group-id="4635002794-2">)</span><span class="p">.</span><span class="w">
+</span><span class="p">-</span><span class="na">include_lib</span><span class="p" data-group-id="4635002794-3">(</span><span class="s">&quot;snabbkaffe/include/snabbkaffe.hrl&quot;</span><span class="p" data-group-id="4635002794-3">)</span><span class="p">.</span><span class="w">
+
+</span><span class="nf">async_action</span><span class="p" data-group-id="4635002794-4">(</span><span class="p" data-group-id="4635002794-4">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="nc">timer</span><span class="p">:</span><span class="nf">sleep</span><span class="p" data-group-id="4635002794-5">(</span><span class="mi">10</span><span class="p" data-group-id="4635002794-5">)</span><span class="p">,</span><span class="w">
+  </span><span class="o">?</span><span class="nf">tp</span><span class="p" data-group-id="4635002794-6">(</span><span class="ss">complete</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4635002794-7">#{</span><span class="p" data-group-id="4635002794-7">}</span><span class="p" data-group-id="4635002794-6">)</span><span class="p">.</span><span class="w">
+
+</span><span class="nf">basic_block_until_test</span><span class="p" data-group-id="4635002794-8">(</span><span class="p" data-group-id="4635002794-8">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="o">?</span><span class="nf">check_trace</span><span class="p" data-group-id="4635002794-9">(</span><span class="w">
+    </span><span class="c1">%% Run stage:</span><span class="w">
+    </span><span class="k">begin</span><span class="w">
+      </span><span class="c1">%% Start some async job:</span><span class="w">
+      </span><span class="nf">spawn</span><span class="p" data-group-id="4635002794-10">(</span><span class="k">fun</span><span class="w"> </span><span class="ss">async_action</span><span class="p">/</span><span class="mi">0</span><span class="p" data-group-id="4635002794-10">)</span><span class="p">,</span><span class="w">
+      </span><span class="c1">%% Wait for completion:</span><span class="w">
+      </span><span class="o">?</span><span class="nf">block_until</span><span class="p" data-group-id="4635002794-11">(</span><span class="p" data-group-id="4635002794-12">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">complete</span><span class="p" data-group-id="4635002794-12">}</span><span class="p" data-group-id="4635002794-11">)</span><span class="w">
+    </span><span class="k">end</span><span class="p">,</span><span class="w">
+    </span><span class="c1">%% Check stage:</span><span class="w">
+    </span><span class="nf">fun</span><span class="p" data-group-id="4635002794-13">(</span><span class="n">Trace</span><span class="p" data-group-id="4635002794-13">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+      </span><span class="c1">%% Verify that the run stage always waits for the event:</span><span class="w">
+      </span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="4635002794-14">(</span><span class="p" data-group-id="4635002794-15">[</span><span class="p">_</span><span class="p" data-group-id="4635002794-15">]</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="nf">of_kind</span><span class="p" data-group-id="4635002794-16">(</span><span class="ss">complete</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="4635002794-16">)</span><span class="p" data-group-id="4635002794-14">)</span><span class="w">
+    </span><span class="k">end</span><span class="p" data-group-id="4635002794-9">)</span><span class="p">.</span></code></pre><p>The first argument of the macro is a match spec for the event.
+It can be quite fancy, for example it can include guards:</p><pre><code class="makeup erlang" translate="no"><span class="o">?</span><span class="nf">block_until</span><span class="p" data-group-id="1616013130-1">(</span><span class="p" data-group-id="1616013130-2">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">foo</span><span class="p">,</span><span class="w"> </span><span class="ss">bar</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="p">_</span><span class="n">Bar</span><span class="p" data-group-id="1616013130-2">}</span><span class="w"> </span><span class="k">when</span><span class="w"> </span><span class="p">_</span><span class="n">Bar</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">2</span><span class="p" data-group-id="1616013130-1">)</span></code></pre><p>If the matching event was found in the past, this macro will return immediately.
+By default, it waits indefinitely.
+In most situations it is the best behavior, since the timeout can be enforced by <code class="inline">timetrap</code> parameter discussed in the previous chapter.
+But in some cases it may be necessary to set the timeout in place:</p><pre><code class="makeup erlang" translate="no"><span class="nf">block_until_timeout_test</span><span class="p" data-group-id="9348736604-1">(</span><span class="p" data-group-id="9348736604-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="o">?</span><span class="nf">check_trace</span><span class="p" data-group-id="9348736604-2">(</span><span class="w">
+    </span><span class="c1">%% Run stage:</span><span class="w">
+    </span><span class="k">begin</span><span class="w">
+      </span><span class="c1">%% Start some async job:</span><span class="w">
+      </span><span class="nf">spawn</span><span class="p" data-group-id="9348736604-3">(</span><span class="k">fun</span><span class="w"> </span><span class="ss">async_action</span><span class="p">/</span><span class="mi">0</span><span class="p" data-group-id="9348736604-3">)</span><span class="p">,</span><span class="w">
+      </span><span class="c1">%% Wait for completion:</span><span class="w">
+      </span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="9348736604-4">(</span><span class="p" data-group-id="9348736604-5">{</span><span class="ss">ok</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="n">Event</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="9348736604-6">#{</span><span class="p" data-group-id="9348736604-6">}</span><span class="p" data-group-id="9348736604-5">}</span><span class="p">,</span><span class="w">
+                   </span><span class="o">?</span><span class="nf">block_until</span><span class="p" data-group-id="9348736604-7">(</span><span class="p" data-group-id="9348736604-8">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">complete</span><span class="p" data-group-id="9348736604-8">}</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="n">Timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p" data-group-id="9348736604-7">)</span><span class="p" data-group-id="9348736604-4">)</span><span class="w">
+    </span><span class="k">end</span><span class="p">,</span><span class="w">
+    </span><span class="c1">%% Check stage:</span><span class="w">
+    </span><span class="nf">fun</span><span class="p" data-group-id="9348736604-9">(</span><span class="n">Trace</span><span class="p" data-group-id="9348736604-9">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+      </span><span class="c1">%% Verify that the run stage always waits for the event:</span><span class="w">
+      </span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="9348736604-10">(</span><span class="p" data-group-id="9348736604-11">[</span><span class="p">_</span><span class="p" data-group-id="9348736604-11">]</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="nf">of_kind</span><span class="p" data-group-id="9348736604-12">(</span><span class="ss">complete</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="9348736604-12">)</span><span class="p" data-group-id="9348736604-10">)</span><span class="w">
+    </span><span class="k">end</span><span class="p" data-group-id="9348736604-2">)</span><span class="p">.</span></code></pre><p>In this case it may be desirable to check the return value, which can be either <code class="inline">{ok, MatchingEvent}</code> or <code class="inline">timeout</code>.</p><p>Finally, the lookback behavior can be also customized:</p><pre><code class="makeup erlang" translate="no"><span class="nf">block_until_lookback_test</span><span class="p" data-group-id="0216826784-1">(</span><span class="p" data-group-id="0216826784-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="o">?</span><span class="nf">check_trace</span><span class="p" data-group-id="0216826784-2">(</span><span class="w">
+    </span><span class="c1">%% Run stage:</span><span class="w">
+    </span><span class="k">begin</span><span class="w">
+      </span><span class="c1">%% Start some async job:</span><span class="w">
+      </span><span class="nf">spawn</span><span class="p" data-group-id="0216826784-3">(</span><span class="k">fun</span><span class="w"> </span><span class="ss">async_action</span><span class="p">/</span><span class="mi">0</span><span class="p" data-group-id="0216826784-3">)</span><span class="p">,</span><span class="w">
+      </span><span class="c1">%% Wait for completion:</span><span class="w">
+      </span><span class="o">?</span><span class="nf">block_until</span><span class="p" data-group-id="0216826784-4">(</span><span class="p" data-group-id="0216826784-5">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">complete</span><span class="p" data-group-id="0216826784-5">}</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="n">Timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="n">BackInTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p" data-group-id="0216826784-4">)</span><span class="w">
+    </span><span class="k">end</span><span class="p">,</span><span class="w">
+    </span><span class="c1">%% Check stage:</span><span class="w">
+    </span><span class="nf">fun</span><span class="p" data-group-id="0216826784-6">(</span><span class="n">Trace</span><span class="p" data-group-id="0216826784-6">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+      </span><span class="c1">%% Verify that the run stage always waits for the event:</span><span class="w">
+      </span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="0216826784-7">(</span><span class="p" data-group-id="0216826784-8">[</span><span class="p">_</span><span class="p" data-group-id="0216826784-8">]</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="nf">of_kind</span><span class="p" data-group-id="0216826784-9">(</span><span class="ss">complete</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="0216826784-9">)</span><span class="p" data-group-id="0216826784-7">)</span><span class="w">
+    </span><span class="k">end</span><span class="p" data-group-id="0216826784-2">)</span><span class="p">.</span></code></pre><p>In this case the macro will only look for the events that were produced no longer than 200 ms in the past.
+However, this risks introducing flakiness into the testcase and should be avoided when possible.
+If you find yourself tuning the lookback values, it's better to switch to more advanced macros described in the next section.</p><p>Finally, it's important to mention one caveat of this macro.
+Consider the following code:</p><pre><code class="makeup erlang" translate="no"><span class="nf">trigger_async_action</span><span class="p" data-group-id="5201049193-1">(</span><span class="ss">foo</span><span class="p" data-group-id="5201049193-1">)</span><span class="p">,</span><span class="w">
+</span><span class="o">?</span><span class="nf">block_until</span><span class="p" data-group-id="5201049193-2">(</span><span class="p" data-group-id="5201049193-3">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">action_complete</span><span class="p" data-group-id="5201049193-3">}</span><span class="p" data-group-id="5201049193-2">)</span><span class="p">,</span><span class="w">
+</span><span class="nf">trigger_async_action</span><span class="p" data-group-id="5201049193-4">(</span><span class="ss">bar</span><span class="p" data-group-id="5201049193-4">)</span><span class="p">,</span><span class="w">
+</span><span class="o">?</span><span class="nf">block_until</span><span class="p" data-group-id="5201049193-5">(</span><span class="p" data-group-id="5201049193-6">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">action_complete</span><span class="p" data-group-id="5201049193-6">}</span><span class="p" data-group-id="5201049193-5">)</span></code></pre><p>It will not work as you expect, since the second invocation of the macro will match the event emitted in the past and return immediately.
+There are two solutions for this.</p><p>Firstly, it will help to refine the matching pattern, e.g.:</p><pre><code class="makeup erlang" translate="no"><span class="nf">trigger_async_action</span><span class="p" data-group-id="3090494769-1">(</span><span class="ss">foo</span><span class="p" data-group-id="3090494769-1">)</span><span class="p">,</span><span class="w">
+</span><span class="o">?</span><span class="nf">block_until</span><span class="p" data-group-id="3090494769-2">(</span><span class="p" data-group-id="3090494769-3">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">action_complete</span><span class="p">,</span><span class="w"> </span><span class="ss">id</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">foo</span><span class="p" data-group-id="3090494769-3">}</span><span class="p" data-group-id="3090494769-2">)</span><span class="p">,</span><span class="w">
+</span><span class="nf">trigger_async_action</span><span class="p" data-group-id="3090494769-4">(</span><span class="ss">bar</span><span class="p" data-group-id="3090494769-4">)</span><span class="p">,</span><span class="w">
+</span><span class="o">?</span><span class="nf">block_until</span><span class="p" data-group-id="3090494769-5">(</span><span class="p" data-group-id="3090494769-6">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">action_complete</span><span class="p">,</span><span class="w"> </span><span class="ss">id</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">bar</span><span class="p" data-group-id="3090494769-6">}</span><span class="p" data-group-id="3090494769-5">)</span></code></pre><p>This way the second <code class="inline">?block_until</code> will ignore the unexpected events.</p><p>The second solution is to specify the number of events that need to happen before unblocking the testcase:</p><pre><code class="makeup erlang" translate="no"><span class="nf">block_until_multiple_events_test</span><span class="p" data-group-id="8171580058-1">(</span><span class="p" data-group-id="8171580058-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="o">?</span><span class="nf">check_trace</span><span class="p" data-group-id="8171580058-2">(</span><span class="w">
+    </span><span class="c1">%% Run stage:</span><span class="w">
+    </span><span class="k">begin</span><span class="w">
+      </span><span class="c1">%% Start async jobs:</span><span class="w">
+      </span><span class="nf">spawn</span><span class="p" data-group-id="8171580058-3">(</span><span class="k">fun</span><span class="w"> </span><span class="ss">async_action</span><span class="p">/</span><span class="mi">0</span><span class="p" data-group-id="8171580058-3">)</span><span class="p">,</span><span class="w">
+      </span><span class="nf">spawn</span><span class="p" data-group-id="8171580058-4">(</span><span class="k">fun</span><span class="w"> </span><span class="ss">async_action</span><span class="p">/</span><span class="mi">0</span><span class="p" data-group-id="8171580058-4">)</span><span class="p">,</span><span class="w">
+      </span><span class="c1">%% Wait for completion:</span><span class="w">
+      </span><span class="nc">snabbkaffe</span><span class="p">:</span><span class="nf">block_until</span><span class="p" data-group-id="8171580058-5">(</span><span class="o">?</span><span class="nf">match_n_events</span><span class="p" data-group-id="8171580058-6">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8171580058-7">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">complete</span><span class="p" data-group-id="8171580058-7">}</span><span class="p" data-group-id="8171580058-6">)</span><span class="p">,</span><span class="w">
+                             </span><span class="p">_</span><span class="n">Timeout</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="ss">infinity</span><span class="p">,</span><span class="w">
+                             </span><span class="p">_</span><span class="n">BackInTIme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">infinity</span><span class="p" data-group-id="8171580058-5">)</span><span class="w">
+    </span><span class="k">end</span><span class="p">,</span><span class="w">
+    </span><span class="c1">%% Check stage:</span><span class="w">
+    </span><span class="nf">fun</span><span class="p" data-group-id="8171580058-8">(</span><span class="n">Trace</span><span class="p" data-group-id="8171580058-8">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+      </span><span class="c1">%% Verify that the run stage waited for both events:</span><span class="w">
+      </span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="8171580058-9">(</span><span class="p" data-group-id="8171580058-10">[</span><span class="p">_</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="p" data-group-id="8171580058-10">]</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="nf">of_kind</span><span class="p" data-group-id="8171580058-11">(</span><span class="ss">complete</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="8171580058-11">)</span><span class="p" data-group-id="8171580058-9">)</span><span class="w">
+    </span><span class="k">end</span><span class="p" data-group-id="8171580058-2">)</span><span class="p">.</span></code></pre><h2 id="wait_async_action" class="section-heading">
+  <a href="#wait_async_action" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">wait_async_action</p>
+  </a>
+  wait_async_action
+</h2>
+<p>In the previous section we discussed how starting multiple async actions and waiting for their completion using <code class="inline">?block_until</code> can lead to unexpected results.
+To address this issue, snabbkaffe provides <code class="inline">?wait_async_action</code> macro:</p><pre><code class="makeup erlang" translate="no"><span class="nf">wait_async_action_test</span><span class="p" data-group-id="4180109307-1">(</span><span class="p" data-group-id="4180109307-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="o">?</span><span class="nf">check_trace</span><span class="p" data-group-id="4180109307-2">(</span><span class="w">
+    </span><span class="c1">%% Run stage:</span><span class="w">
+    </span><span class="k">begin</span><span class="w">
+      </span><span class="o">?</span><span class="nf">wait_async_action</span><span class="p" data-group-id="4180109307-3">(</span><span class="w">
+         </span><span class="c1">%% Trigger the action:</span><span class="w">
+         </span><span class="k">begin</span><span class="w">
+           </span><span class="nf">spawn</span><span class="p" data-group-id="4180109307-4">(</span><span class="k">fun</span><span class="w"> </span><span class="ss">async_action</span><span class="p">/</span><span class="mi">0</span><span class="p" data-group-id="4180109307-4">)</span><span class="w">
+         </span><span class="k">end</span><span class="p">,</span><span class="w">
+         </span><span class="c1">%% Match pattern for the completion event:</span><span class="w">
+         </span><span class="p" data-group-id="4180109307-5">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">complete</span><span class="p" data-group-id="4180109307-5">}</span><span class="p" data-group-id="4180109307-3">)</span><span class="p">,</span><span class="w">
+      </span><span class="c1">%% Repeat:</span><span class="w">
+      </span><span class="o">?</span><span class="nf">wait_async_action</span><span class="p" data-group-id="4180109307-6">(</span><span class="w">
+         </span><span class="c1">%% Trigger the action:</span><span class="w">
+         </span><span class="nf">spawn</span><span class="p" data-group-id="4180109307-7">(</span><span class="k">fun</span><span class="w"> </span><span class="ss">async_action</span><span class="p">/</span><span class="mi">0</span><span class="p" data-group-id="4180109307-7">)</span><span class="p">,</span><span class="w">
+         </span><span class="c1">%% Match pattern:</span><span class="w">
+         </span><span class="p" data-group-id="4180109307-8">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">complete</span><span class="p" data-group-id="4180109307-8">}</span><span class="p">,</span><span class="w">
+         </span><span class="c1">%% Optional timeout:</span><span class="w">
+         </span><span class="mi">100</span><span class="p" data-group-id="4180109307-6">)</span><span class="w">
+    </span><span class="k">end</span><span class="p">,</span><span class="w">
+    </span><span class="c1">%% Check stage:</span><span class="w">
+    </span><span class="nf">fun</span><span class="p" data-group-id="4180109307-9">(</span><span class="n">Trace</span><span class="p" data-group-id="4180109307-9">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+      </span><span class="c1">%% Verify completion of both actions:</span><span class="w">
+      </span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="4180109307-10">(</span><span class="p" data-group-id="4180109307-11">[</span><span class="p">_</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="p" data-group-id="4180109307-11">]</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="nf">of_kind</span><span class="p" data-group-id="4180109307-12">(</span><span class="ss">complete</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="4180109307-12">)</span><span class="p" data-group-id="4180109307-10">)</span><span class="w">
+    </span><span class="k">end</span><span class="p" data-group-id="4180109307-2">)</span><span class="p">.</span></code></pre><p><code class="inline">?wait_async_action</code> installs a watcher before running the code from the first argument, so it doesn't have to look in the past.
+It returns a tuple <code class="inline">{ActionResult, {ok, Event}}</code> or <code class="inline">{ActionResult, timeout}</code>.</p><h2 id="subscribe-receive_events" class="section-heading">
+  <a href="#subscribe-receive_events" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">subscribe-receive_events</p>
+  </a>
+  subscribe/receive_events
+</h2>
+<p>When the testcase gets really complicated, and it has to wait for multiple events of different kinds, the simple macros may not be enough.
+In this section we will introduce the most flexible of the real time trace inspection APIs.
+A pair of <a href="snabbkaffe.html#subscribe/3"><code class="inline">snabbkaffe:subscribe/3</code></a> and <a href="snabbkaffe.html#receive_events/1"><code class="inline">snabbkaffe:receive_events/1</code></a> functions can be used in the tricky situations.
+The first one installs a watcher that will wait for a specified number of events matching a pattern.
+The second function takes an opaque reference returned by the first call, and blocks execution until the events are produced, or until timeout.</p><pre><code class="makeup erlang" translate="no"><span class="nf">subscribe_receive_test</span><span class="p" data-group-id="9962384299-1">(</span><span class="p" data-group-id="9962384299-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="o">?</span><span class="nf">check_trace</span><span class="p" data-group-id="9962384299-2">(</span><span class="w">
+     </span><span class="k">begin</span><span class="w">
+       </span><span class="p" data-group-id="9962384299-3">{</span><span class="ss">ok</span><span class="p">,</span><span class="w"> </span><span class="n">SubRef</span><span class="p" data-group-id="9962384299-3">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">snabbkaffe</span><span class="p">:</span><span class="nf">subscribe</span><span class="p" data-group-id="9962384299-4">(</span><span class="o">?</span><span class="nf">match_event</span><span class="p" data-group-id="9962384299-5">(</span><span class="p" data-group-id="9962384299-6">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">complete</span><span class="p" data-group-id="9962384299-6">}</span><span class="p" data-group-id="9962384299-5">)</span><span class="p">,</span><span class="w">
+                                           </span><span class="p">_</span><span class="n">NEvents</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+                                           </span><span class="p">_</span><span class="n">Timeout</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="ss">infinity</span><span class="p" data-group-id="9962384299-4">)</span><span class="p">,</span><span class="w">
+       </span><span class="nf">spawn</span><span class="p" data-group-id="9962384299-7">(</span><span class="k">fun</span><span class="w"> </span><span class="ss">async_action</span><span class="p">/</span><span class="mi">0</span><span class="p" data-group-id="9962384299-7">)</span><span class="p">,</span><span class="w">
+       </span><span class="nf">spawn</span><span class="p" data-group-id="9962384299-8">(</span><span class="k">fun</span><span class="w"> </span><span class="ss">async_action</span><span class="p">/</span><span class="mi">0</span><span class="p" data-group-id="9962384299-8">)</span><span class="p">,</span><span class="w">
+       </span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="9962384299-9">(</span><span class="p" data-group-id="9962384299-10">{</span><span class="ss">ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9962384299-11">[</span><span class="p" data-group-id="9962384299-12">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">complete</span><span class="p" data-group-id="9962384299-12">}</span><span class="p">,</span><span class="w">
+                          </span><span class="p" data-group-id="9962384299-13">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">complete</span><span class="p" data-group-id="9962384299-13">}</span><span class="w">
+                         </span><span class="p" data-group-id="9962384299-11">]</span><span class="p" data-group-id="9962384299-10">}</span><span class="p">,</span><span class="w">
+                    </span><span class="nc">snabbkaffe</span><span class="p">:</span><span class="nf">receive_events</span><span class="p" data-group-id="9962384299-14">(</span><span class="n">SubRef</span><span class="p" data-group-id="9962384299-14">)</span><span class="p" data-group-id="9962384299-9">)</span><span class="w">
+     </span><span class="k">end</span><span class="p">,</span><span class="w">
+     </span><span class="p" data-group-id="9962384299-15">[</span><span class="p" data-group-id="9962384299-15">]</span><span class="p" data-group-id="9962384299-2">)</span><span class="p">.</span></code></pre><p>The return type of <code class="inline">receive_events</code> is <code class="inline">{ok | timeout, ListOfMatchedEvents}</code>.
+If the number of received events is equal to the number of events specified in the <code class="inline">subscribe</code> call, the first element of the tuple is <code class="inline">ok</code>, and <code class="inline">timeout</code> otherwise.
+Pairs of <code class="inline">subscribe</code>/<code class="inline">receive_events</code> calls can be nested.</p><p>Side note: both <code class="inline">?block_until</code> and <code class="inline">?wait_async_action</code> use this API internally.</p><h2 id="retry" class="section-heading">
+  <a href="#retry" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">retry</p>
+  </a>
+  retry
+</h2>
+<p>Snabbkaffe aims to eliminate &quot;retry function N times until it succeeds&quot; anti-pattern in tests.
+However, in some situations it's inevitable.
+So it provides a macro to avoid ad-hoc implementations:</p><pre><code class="makeup erlang" translate="no"><span class="nf">retry_test</span><span class="p" data-group-id="8745676881-1">(</span><span class="p" data-group-id="8745676881-1">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="o">?</span><span class="nf">retry</span><span class="p" data-group-id="8745676881-2">(</span><span class="p">_</span><span class="n">Interval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="n">NRepeats</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+         </span><span class="k">begin</span><span class="w">
+           </span><span class="c1">%% Some code</span><span class="w">
+           </span><span class="ss">ok</span><span class="w">
+         </span><span class="k">end</span><span class="p" data-group-id="8745676881-2">)</span><span class="p">.</span></code></pre><p>It will retry the body of the macro N times with a specified interval, until it succeeds (i.e. returns a value instead of throwing an exception).</p>
+<div class="bottom-actions">
+  <div class="bottom-actions-item">
+
+      <a href="running.html" class="bottom-actions-button" rel="prev">
+        <span class="subheader">
+          ← Previous Page
+        </span>
+        <span class="title">
+Running the testcases
+        </span>
+      </a>
+
+  </div>
+  <div class="bottom-actions-item">
+
+      <a href="offline_analysis.html" class="bottom-actions-button" rel="next">
+        <span class="subheader">
+          Next Page →
+        </span>
+        <span class="title">
+Offline analysis of the traces
+        </span>
+      </a>
+
+  </div>
+</div>
+      <footer class="footer">
+        <p>
+
+            <span class="line">
+              <a href="https://hex.pm/packages/snabbkaffe/1.0.5+build.183.ref9141353" class="footer-hex-package">Hex Package</a>
+
+              <a href="https://preview.hex.pm/preview/snabbkaffe/1.0.5+build.183.ref9141353">Hex Preview</a>
+
+                (<a href="https://preview.hex.pm/preview/snabbkaffe/1.0.5+build.183.ref9141353/show/doc/src/waiting_events.md">current file</a>)
+
+            </span>
+
+          <span class="line">
+            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+              Search HexDocs
+            </button>
+
+              <a href="snabbkaffe.epub" title="ePub version">
+                Download ePub version
+              </a>
+
+          </span>
+        </p>
+
+        <p class="built-using">
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.1) for the
+
+            <a href="https://erlang.org" title="Erlang" target="_blank" translate="no">Erlang programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>

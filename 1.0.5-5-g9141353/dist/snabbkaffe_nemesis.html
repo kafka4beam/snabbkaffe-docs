@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.29.1">
+    <meta name="project" content="snabbkaffe v1.0.5+build.183.ref9141353">
+
+    <title>snabbkaffe_nemesis — snabbkaffe v1.0.5+build.183.ref9141353</title>
+    <link rel="stylesheet" href="dist/html-erlang-6FXMBT73.css" />
+
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-IV5W3OL2.js"></script>
+    <script src="dist/sidebar_items-8544A48C.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/html-XN2TSG4M.js"></script>
+
+
+  </head>
+  <body data-type="modules" class="page-module">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="readme.html" class="sidebar-projectName" translate="no">
+snabbkaffe
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v1.0.5+build.183.ref9141353
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="icon-action display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+    <a href="https://github.com/kafka4beam/snabbkaffe/blob/v1.0.5+build.183.ref9141353/src/snabbkaffe_nemesis.erl#L35" title="View Source" class="icon-action" rel="help">
+      <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+      <span class="sr-only">View Source</span>
+    </a>
+
+  <span translate="no">snabbkaffe_nemesis</span> 
+  <small class="app-vsn" translate="no">(snabbkaffe v1.0.5+build.183.ref9141353)</small>
+
+</h1>
+
+
+  <section id="moduledoc">
+<p>This module implements &quot;nemesis&quot; process that injects faults into system under test in order to test its fault-tolerance.</p><h3 id="module-usage" class="section-heading">
+  <a href="#module-usage" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">usage</p>
+  </a>
+  <a name="Usage">Usage</a>
+</h3>
+<h4><a name="Somewhere_in_the_tested_code">Somewhere in the tested code</a></h4><pre><code class="makeup erlang" translate="no"><span class="w">  </span><span class="o">?</span><span class="nf">maybe_crash</span><span class="p" data-group-id="6976989224-1">(</span><span class="ss">kind1</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6976989224-2">#{</span><span class="ss">data1</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">Foo</span><span class="p">,</span><span class="w"> </span><span class="ss">field2</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">Bar</span><span class="p" data-group-id="6976989224-2">}</span><span class="p" data-group-id="6976989224-1">)</span></code></pre><h4><a name="Somewhere_in_the_run_stage">Somewhere in the run stage</a></h4><pre><code class="makeup erlang" translate="no"><span class="w">  </span><span class="o">?</span><span class="nf">inject_crash</span><span class="p" data-group-id="3029370392-1">(</span><span class="w"> </span><span class="p" data-group-id="3029370392-2">#{</span><span class="o">?</span><span class="ss">snk_kind</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="ss">kind1</span><span class="p">,</span><span class="w"> </span><span class="ss">data1</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="mi">42</span><span class="p" data-group-id="3029370392-2">}</span><span class="w">
+               </span><span class="p">,</span><span class="w"> </span><span class="nc">snabbkaffe_nemesis</span><span class="p">:</span><span class="nf">always_crash</span><span class="p" data-group-id="3029370392-3">(</span><span class="p" data-group-id="3029370392-3">)</span><span class="w">
+               </span><span class="p" data-group-id="3029370392-1">)</span></code></pre>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
+<div class="summary-types summary">
+  <h2>
+    <a href="#types">Types</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:fault_key/0" translate="no">fault_key/0</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:fault_scenario/0" translate="no">fault_scenario/0</a>
+
+      </div>
+
+    </div>
+
+</div>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#always_crash/0" translate="no">always_crash()</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#cleanup/0" translate="no">cleanup()</a>
+
+      </div>
+
+        <div class="summary-synopsis">Remove all injected crashes</div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#fix_crash/1" translate="no">fix_crash(Ref)</a>
+
+      </div>
+
+        <div class="summary-synopsis">Remove injected fault</div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#force_ordering/3" translate="no">force_ordering(DelayPredicate, NEvents, ContinuePredicate)</a>
+
+      </div>
+
+        <div class="summary-synopsis">Inject scheduling into the system</div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#inject_crash/2" translate="no">inject_crash(Predicate, Scenario)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Equivalent to <a href="#inject_crash/3">inject_crash(Predicate, Scenario, notmyday)</a>.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#inject_crash/3" translate="no">inject_crash(Predicate, Scenario, Reason)</a>
+
+      </div>
+
+        <div class="summary-synopsis">Inject crash into the system</div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#periodic_crash/3" translate="no">periodic_crash(Period, DutyCycle, Phase)</a>
+
+      </div>
+
+        <div class="summary-synopsis">A type of fault that occurs and fixes periodically.</div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#random_crash/1" translate="no">random_crash(CrashProbability)</a>
+
+      </div>
+
+        <div class="summary-synopsis">Crash with probability P</div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#recover_after/1" translate="no">recover_after(Times)</a>
+
+      </div>
+
+        <div class="summary-synopsis">Crash N times consequently, then recover</div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Types
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:fault_key/0">
+
+  <div class="detail-header">
+    <a href="#t:fault_key/0" class="detail-link" title="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature" translate="no">fault_key/0</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v1.0.5+build.183.ref9141353/src/snabbkaffe_nemesis.erl#L85" class="icon-action" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> fault_key() :: term().</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:fault_scenario/0">
+
+  <div class="detail-header">
+    <a href="#t:fault_scenario/0" class="detail-link" title="Link to this opaque">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this opaque</span>
+    </a>
+    <h1 class="signature" translate="no">fault_scenario/0</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v1.0.5+build.183.ref9141353/src/snabbkaffe_nemesis.erl#L83" class="icon-action" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+      <span class="note">(opaque)</span>
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-opaque</span> fault_scenario()</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Functions
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="always_crash/0">
+
+  <div class="detail-header">
+    <a href="#always_crash/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">always_crash()</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v1.0.5+build.183.ref9141353/src/snabbkaffe_nemesis.erl#L211" class="icon-action" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> always_crash() -> <a href="#t:fault_scenario/0">fault_scenario</a>().</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="cleanup/0">
+
+  <div class="detail-header">
+    <a href="#cleanup/0" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">cleanup()</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v1.0.5+build.183.ref9141353/src/snabbkaffe_nemesis.erl#L147" class="icon-action" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> cleanup() -> ok.</pre>
+
+      </div>
+
+Remove all injected crashes
+  </section>
+</section>
+<section class="detail" id="fix_crash/1">
+
+  <div class="detail-header">
+    <a href="#fix_crash/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">fix_crash(Ref)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v1.0.5+build.183.ref9141353/src/snabbkaffe_nemesis.erl#L142" class="icon-action" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> fix_crash(reference()) -> ok.</pre>
+
+      </div>
+
+Remove injected fault
+  </section>
+</section>
+<section class="detail" id="force_ordering/3">
+
+  <div class="detail-header">
+    <a href="#force_ordering/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">force_ordering(DelayPredicate, NEvents, ContinuePredicate)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v1.0.5+build.183.ref9141353/src/snabbkaffe_nemesis.erl#L181" class="icon-action" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> force_ordering(<a href="snabbkaffe.html#t:predicate/0">snabbkaffe:predicate</a>(), non_neg_integer(), <a href="snabbkaffe.html#t:predicate2/0">snabbkaffe:predicate2</a>()) -> reference().</pre>
+
+      </div>
+
+Inject scheduling into the system
+  </section>
+</section>
+<section class="detail" id="inject_crash/2">
+
+  <div class="detail-header">
+    <a href="#inject_crash/2" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">inject_crash(Predicate, Scenario)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v1.0.5+build.183.ref9141353/src/snabbkaffe_nemesis.erl#L125" class="icon-action" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> inject_crash(<a href="snabbkaffe.html#t:predicate/0">snabbkaffe:predicate</a>(), <a href="#t:fault_scenario/0">fault_scenario</a>()) -> reference().</pre>
+
+      </div>
+
+<p>Equivalent to <a href="#inject_crash/3">inject_crash(Predicate, Scenario, notmyday)</a>.</p>
+  </section>
+</section>
+<section class="detail" id="inject_crash/3">
+
+  <div class="detail-header">
+    <a href="#inject_crash/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">inject_crash(Predicate, Scenario, Reason)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v1.0.5+build.183.ref9141353/src/snabbkaffe_nemesis.erl#L130" class="icon-action" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> inject_crash(<a href="snabbkaffe.html#t:predicate/0">snabbkaffe:predicate</a>(), <a href="#t:fault_scenario/0">fault_scenario</a>(), term()) -> reference().</pre>
+
+      </div>
+
+Inject crash into the system
+  </section>
+</section>
+<section class="detail" id="periodic_crash/3">
+
+  <div class="detail-header">
+    <a href="#periodic_crash/3" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">periodic_crash(Period, DutyCycle, Phase)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v1.0.5+build.183.ref9141353/src/snabbkaffe_nemesis.erl#L236" class="icon-action" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> periodic_crash(integer(), float(), float()) -> <a href="#t:fault_scenario/0">fault_scenario</a>().</pre>
+
+      </div>
+
+A type of fault that occurs and fixes periodically.
+  </section>
+</section>
+<section class="detail" id="random_crash/1">
+
+  <div class="detail-header">
+    <a href="#random_crash/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">random_crash(CrashProbability)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v1.0.5+build.183.ref9141353/src/snabbkaffe_nemesis.erl#L225" class="icon-action" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> random_crash(float()) -> <a href="#t:fault_scenario/0">fault_scenario</a>().</pre>
+
+      </div>
+
+Crash with probability P
+  </section>
+</section>
+<section class="detail" id="recover_after/1">
+
+  <div class="detail-header">
+    <a href="#recover_after/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">recover_after(Times)</h1>
+
+      <a href="https://github.com/kafka4beam/snabbkaffe/blob/v1.0.5+build.183.ref9141353/src/snabbkaffe_nemesis.erl#L218" class="icon-action" rel="help" title="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+       <span class="sr-only">View Source</span>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> recover_after(non_neg_integer()) -> <a href="#t:fault_scenario/0">fault_scenario</a>().</pre>
+
+      </div>
+
+Crash N times consequently, then recover
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+        <p>
+
+            <span class="line">
+              <a href="https://hex.pm/packages/snabbkaffe/1.0.5+build.183.ref9141353" class="footer-hex-package">Hex Package</a>
+
+              <a href="https://preview.hex.pm/preview/snabbkaffe/1.0.5+build.183.ref9141353">Hex Preview</a>
+
+                (<a href="https://preview.hex.pm/preview/snabbkaffe/1.0.5+build.183.ref9141353/show/src/snabbkaffe_nemesis.erl">current file</a>)
+
+            </span>
+
+          <span class="line">
+            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+              Search HexDocs
+            </button>
+
+              <a href="snabbkaffe.epub" title="ePub version">
+                Download ePub version
+              </a>
+
+          </span>
+        </p>
+
+        <p class="built-using">
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.1) for the
+
+            <a href="https://erlang.org" title="Erlang" target="_blank" translate="no">Erlang programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>
