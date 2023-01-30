@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.29.1">
+    <meta name="project" content="snabbkaffe v1.0.5+build.184.ref33b4edf">
+
+    <title>Injecting faults into the SUT — snabbkaffe v1.0.5+build.184.ref33b4edf</title>
+    <link rel="stylesheet" href="dist/html-erlang-6FXMBT73.css" />
+
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-IV5W3OL2.js"></script>
+    <script src="dist/sidebar_items-8544A48C.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/html-XN2TSG4M.js"></script>
+
+
+  </head>
+  <body data-type="extras" class="page-extra">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="readme.html" class="sidebar-projectName" translate="no">
+snabbkaffe
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v1.0.5+build.184.ref33b4edf
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <output role="status" id="toast"></output>
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="icon-action display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+    <a href="https://github.com/kafka4beam/snabbkaffe/blob/v1.0.5+build.184.ref33b4edf/doc/src/fault_injection.md#L1" title="View Source" class="icon-action" rel="help">
+      <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+      <span class="sr-only">View Source</span>
+    </a>
+
+
+  <span>Injecting faults into the SUT</span>
+</h1>
+
+<p>Snabbkaffe allows to inject crashes into any trace point.
+This is useful for tuning supervision trees and testing fault tolerance of the system.
+Snabbkaffe comes with a number of &quot;fault scenarios&quot; that emulate recoverable or transient failures.</p><h2 id="inject_crash" class="section-heading">
+  <a href="#inject_crash" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">inject_crash</p>
+  </a>
+  ?inject_crash
+</h2>
+<p><code class="inline">?inject_crash</code> macro is used for injecting faults into the system.
+The first argument of this macro is a match pattern for events, and the second argument is fault scenario.
+The return value is an opaque reference that can be used to remove the injected fault.
+Note: injected crashes are global, they work on the remote nodes.</p><p>Example:</p><pre><code class="makeup erlang" translate="no"><span class="p">-</span><span class="na">module</span><span class="p" data-group-id="9243928527-1">(</span><span class="ss">fault_injection_example</span><span class="p" data-group-id="9243928527-1">)</span><span class="p">.</span><span class="w">
+</span><span class="w">
+</span><span class="p">-</span><span class="na">include_lib</span><span class="p" data-group-id="9243928527-2">(</span><span class="s">&quot;snabbkaffe/include/snabbkaffe.hrl&quot;</span><span class="p" data-group-id="9243928527-2">)</span><span class="p">.</span><span class="w">
+</span><span class="p">-</span><span class="na">include_lib</span><span class="p" data-group-id="9243928527-3">(</span><span class="s">&quot;eunit/include/eunit.hrl&quot;</span><span class="p" data-group-id="9243928527-3">)</span><span class="p">.</span><span class="w">
+
+</span><span class="nf">inject_failure_test</span><span class="p" data-group-id="9243928527-4">(</span><span class="p" data-group-id="9243928527-4">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+  </span><span class="o">?</span><span class="nf">check_trace</span><span class="p" data-group-id="9243928527-5">(</span><span class="w">
+    </span><span class="c1">%% Run stage</span><span class="w">
+    </span><span class="k">begin</span><span class="w">
+      </span><span class="c1">%% Inject crashes:</span><span class="w">
+      </span><span class="o">?</span><span class="nf">inject_crash</span><span class="p" data-group-id="9243928527-6">(</span><span class="p" data-group-id="9243928527-7">#{</span><span class="o">?</span><span class="ss">snk_meta</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="p" data-group-id="9243928527-8">#{</span><span class="ss">domain</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="p" data-group-id="9243928527-9">[</span><span class="ss">my</span><span class="p">,</span><span class="ss">domain</span><span class="p">|</span><span class="p">_</span><span class="p" data-group-id="9243928527-9">]</span><span class="p" data-group-id="9243928527-8">}</span><span class="p" data-group-id="9243928527-7">}</span><span class="p">,</span><span class="w">
+                    </span><span class="nc">snabbkaffe_nemesis</span><span class="p">:</span><span class="nf">always_crash</span><span class="p" data-group-id="9243928527-10">(</span><span class="p" data-group-id="9243928527-10">)</span><span class="p" data-group-id="9243928527-6">)</span><span class="p">,</span><span class="w">
+      </span><span class="c1">%% Start the system:</span><span class="w">
+      </span><span class="nc">logger</span><span class="p">:</span><span class="nf">update_process_metadata</span><span class="p" data-group-id="9243928527-11">(</span><span class="p" data-group-id="9243928527-12">#{</span><span class="ss">domain</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="9243928527-13">[</span><span class="ss">my</span><span class="p">,</span><span class="w"> </span><span class="ss">domain</span><span class="p" data-group-id="9243928527-13">]</span><span class="p" data-group-id="9243928527-12">}</span><span class="p" data-group-id="9243928527-11">)</span><span class="p">,</span><span class="w">
+      </span><span class="c1">%% Any trace point matching the injected crash pattern will fail now:</span><span class="w">
+      </span><span class="o">?</span><span class="nf">assertExit</span><span class="p" data-group-id="9243928527-14">(</span><span class="p">_</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="nf">tp</span><span class="p" data-group-id="9243928527-15">(</span><span class="ss">some_event</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9243928527-16">#{</span><span class="p" data-group-id="9243928527-16">}</span><span class="p" data-group-id="9243928527-15">)</span><span class="p" data-group-id="9243928527-14">)</span><span class="w">
+    </span><span class="k">end</span><span class="p">,</span><span class="w">
+    </span><span class="nf">fun</span><span class="p" data-group-id="9243928527-17">(</span><span class="n">Trace</span><span class="p" data-group-id="9243928527-17">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w">
+      </span><span class="c1">%% Injected failures are recorded in the trace:</span><span class="w">
+      </span><span class="o">?</span><span class="nf">assertMatch</span><span class="p" data-group-id="9243928527-18">(</span><span class="p" data-group-id="9243928527-19">[</span><span class="p">_</span><span class="p" data-group-id="9243928527-19">]</span><span class="p">,</span><span class="w">
+                   </span><span class="o">?</span><span class="nf">of_kind</span><span class="p" data-group-id="9243928527-20">(</span><span class="ss">snabbkaffe_crash</span><span class="p">,</span><span class="w"> </span><span class="n">Trace</span><span class="p" data-group-id="9243928527-20">)</span><span class="p" data-group-id="9243928527-18">)</span><span class="w">
+    </span><span class="k">end</span><span class="p" data-group-id="9243928527-5">)</span><span class="p">.</span></code></pre><h2 id="fix_crash" class="section-heading">
+  <a href="#fix_crash" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">fix_crash</p>
+  </a>
+  fix_crash
+</h2>
+<p><code class="inline">snabbkaffe_nemesis:fix_crash(Ref)</code> removes an injected crash.
+It takes one argument: the reference returned by <code class="inline">?inject_crash</code> macro.</p><h1>Fault scenarios</h1><h2 id="always_crash" class="section-heading">
+  <a href="#always_crash" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">always_crash</p>
+  </a>
+  always_crash
+</h2>
+<p>As the name suggests, this fault scenario always generates crashes.</p><p>Example:</p><pre><code class="makeup erlang" translate="no"><span class="o">?</span><span class="nf">inject_crash</span><span class="p" data-group-id="7302348883-1">(</span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p">,</span><span class="w"> </span><span class="nc">snabbkaffe_nemesis</span><span class="p">:</span><span class="nf">always_crash</span><span class="p" data-group-id="7302348883-2">(</span><span class="p" data-group-id="7302348883-2">)</span><span class="p" data-group-id="7302348883-1">)</span></code></pre><h2 id="recover_after" class="section-heading">
+  <a href="#recover_after" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">recover_after</p>
+  </a>
+  recover_after
+</h2>
+<p>This fault scenario imitates a recoverable crash.
+It will generate <code class="inline">N</code> crashes, then the code will execute normally.</p><pre><code class="makeup erlang" translate="no"><span class="o">?</span><span class="nf">inject_crash</span><span class="p" data-group-id="5130665204-1">(</span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p">,</span><span class="w"> </span><span class="nc">snabbkaffe_nemesis</span><span class="p">:</span><span class="nf">recover_after</span><span class="p" data-group-id="5130665204-2">(</span><span class="mi">10</span><span class="p" data-group-id="5130665204-2">)</span><span class="p" data-group-id="5130665204-1">)</span></code></pre><h2 id="random_crash" class="section-heading">
+  <a href="#random_crash" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">random_crash</p>
+  </a>
+  random_crash
+</h2>
+<p>This fault scenario generates random crashes with probability <code class="inline">P</code>.</p><p>Example:</p><pre><code class="makeup erlang" translate="no"><span class="o">?</span><span class="nf">inject_crash</span><span class="p" data-group-id="2982830836-1">(</span><span class="p">.</span><span class="p">.</span><span class="p">.</span><span class="p">,</span><span class="w"> </span><span class="nc">snabbkaffe_nemesis</span><span class="p">:</span><span class="nf">random_crash</span><span class="p" data-group-id="2982830836-2">(</span><span class="mf">0.1</span><span class="p" data-group-id="2982830836-2">)</span><span class="p" data-group-id="2982830836-1">)</span></code></pre><h2 id="periodic_crash" class="section-heading">
+  <a href="#periodic_crash" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i>
+  <p class="sr-only">periodic_crash</p>
+  </a>
+  periodic_crash
+</h2>
+<p>This fault scenario generates crashes periodically.
+It takes three parameters:</p><ul><li>period: number of matching events until the cycle repeats</li><li>duty cycle: ratio of successes to failures</li><li>phase: 0..2π, acts similar to phase of a sine function</li></ul><p>Example:</p><pre><code class="makeup erlang" translate="no"><span class="nc">snabbkaffe_nemesis</span><span class="p">:</span><span class="nf">periodic_crash</span><span class="p" data-group-id="1438487683-1">(</span><span class="w">
+  </span><span class="p">_</span><span class="n">Period</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="n">DutyCycle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="p">_</span><span class="n">Phase</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">math</span><span class="p">:</span><span class="nf">pi</span><span class="p" data-group-id="1438487683-2">(</span><span class="p" data-group-id="1438487683-2">)</span><span class="p" data-group-id="1438487683-1">)</span></code></pre><p>To illustrate how the parameters affect the behavior, consider the examples:</p><ul><li><code class="inline">snabbkaffe_nemesis:periodic_crash(4, 0.5, 0)</code>: <code class="inline">[ok,ok,crash,crash,ok,ok,crash,crash,ok,ok,crash,...]</code></li><li><code class="inline">snabbkaffe_nemesis:periodic_crash(4, 0.5, math:pi())</code>: <code class="inline">[crash,crash,ok,ok,crash,crash,ok,ok,crash,crash,...]</code></li><li><code class="inline">snabbkaffe_nemesis:periodic_crash(4, 0.25, 0)</code>: <code class="inline">[ok,crash,crash,crash,ok,crash,crash,crash,ok,crash,crash,...]</code></li></ul>
+<div class="bottom-actions">
+  <div class="bottom-actions-item">
+
+      <a href="offline_analysis.html" class="bottom-actions-button" rel="prev">
+        <span class="subheader">
+          ← Previous Page
+        </span>
+        <span class="title">
+Offline analysis of the traces
+        </span>
+      </a>
+
+  </div>
+  <div class="bottom-actions-item">
+
+      <a href="scheduling_injection.html" class="bottom-actions-button" rel="next">
+        <span class="subheader">
+          Next Page →
+        </span>
+        <span class="title">
+Injecting schedulings into the SUT
+        </span>
+      </a>
+
+  </div>
+</div>
+      <footer class="footer">
+        <p>
+
+            <span class="line">
+              <a href="https://hex.pm/packages/snabbkaffe/1.0.5+build.184.ref33b4edf" class="footer-hex-package">Hex Package</a>
+
+              <a href="https://preview.hex.pm/preview/snabbkaffe/1.0.5+build.184.ref33b4edf">Hex Preview</a>
+
+                (<a href="https://preview.hex.pm/preview/snabbkaffe/1.0.5+build.184.ref33b4edf/show/doc/src/fault_injection.md">current file</a>)
+
+            </span>
+
+          <span class="line">
+            <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+              Search HexDocs
+            </button>
+
+              <a href="snabbkaffe.epub" title="ePub version">
+                Download ePub version
+              </a>
+
+          </span>
+        </p>
+
+        <p class="built-using">
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.29.1) for the
+
+            <a href="https://erlang.org" title="Erlang" target="_blank" translate="no">Erlang programming language</a>
+
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>
